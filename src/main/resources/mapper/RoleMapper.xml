@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forest.mapper.RoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.forest.model.persist.entity.Role">
+            <id property="role_id" column="role_id" />
+            <result property="role_name" column="role_name" />
+            <result property="description" column="description" />
+            <result property="create_time" column="create_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        role_id,role_name,description,create_time
+    </sql>
+</mapper>
