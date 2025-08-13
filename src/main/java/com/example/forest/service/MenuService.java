@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.forest.model.persist.entity.Menu;
 import com.example.forest.model.persist.vo.menu.MenuVo;
 
+import java.util.List;
+
 
 /**
 * @author Mr_zh
@@ -14,4 +16,6 @@ import com.example.forest.model.persist.vo.menu.MenuVo;
 public interface MenuService extends IService<Menu> {
 
     MenuVo selectMenuById(Integer id);
+
+    List<MenuVo> selectAllMenu();
 }

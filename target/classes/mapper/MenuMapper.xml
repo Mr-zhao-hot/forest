@@ -24,10 +24,16 @@
         icon,sort,hidden,always_show,redirect,
         meta
     </sql>
-
+    <!--单个路由查询-->
     <select id="SelectMenuById" resultType="com.example.forest.model.persist.vo.menu.MenuVo">
         select  id,parent_id,name,path,component,title,
                     icon,sort,hidden,always_show,redirect,
                     meta from menu;
+    </select>
+    <!--多个路由查询-->
+    <select id="selectAllMenu" resultType="com.example.forest.model.persist.vo.menu.MenuVo">
+        select  id,parent_id,name,path,component,title,
+                icon,sort,hidden,always_show,redirect,
+                meta from menu;
     </select>
 </mapper>

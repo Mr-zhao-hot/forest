@@ -7,9 +7,10 @@ import com.example.forest.model.persist.entity.Menu;
 import com.example.forest.model.persist.vo.menu.MenuVo;
 import com.example.forest.service.MenuService;
 import jakarta.annotation.Resource;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -29,7 +30,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
     private MenuCache menuCache;
 
     @Override
-    @Cacheable(value = "selectMenuById",key = "'selectMenuById'")
+
     public MenuVo selectMenuById(Integer id) {
         // 先查缓存
         MenuVo menuVo1 = menuCache.SelectMenuById(id);
@@ -41,6 +42,25 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
         // 存入缓存
         menuCache.setSelectMenuById(id , menuVo);
         return menuVo;
+    }
+
+    @Override
+    public List<MenuVo> selectAllMenu() {
+        // 查缓存
+        List<MenuVo> cachedMenus = menuCache.getSelectAllMenu();
+        if (cachedMenus != null && !cachedMenus.isEmpty()) {
+            return cachedMenus;
+        }
+
+        // 查数据库
+        List<MenuVo> menusFromDB = menuMapper.selectAllMenu();
+
+        // 存入缓存
+        if (menusFromDB != null && !menusFromDB.isEmpty()) {
+            menuCache.setSelectAllMenu(menusFromDB);
+        }
+
+        return menusFromDB;
     }
 }
 

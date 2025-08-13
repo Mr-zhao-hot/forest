@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @RestController
@@ -30,6 +31,12 @@ public class MenuController  {
     }
 
     // 查询全部菜单
+    @GetMapping("/selectAllMenu")
+    @Cacheable(value = "selectAllMenu", key = "'selectAllMenu'")
+    public JsonOk<List<MenuVo>> selectAllMenu() {
+        return JsonOk.success(menuService.selectAllMenu());
+    }
+
 
     // 新增菜单
 
