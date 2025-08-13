@@ -1,9 +1,11 @@
 package com.example.forest.model.persist.param.meau;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
 
 import java.io.Serializable;
 
+@Data
 public class MenuParam implements Serializable {
     /**
      * 父菜单ID

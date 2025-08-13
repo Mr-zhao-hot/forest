@@ -47,9 +47,24 @@ const router = createRouter({
     },
     {
       path: '/pageMain',
-      name: 'Page',
-      component: () => import('../view/PageMain.vue')
-    }
+      name: 'PageMain',
+      component: () => import('@/view/PageMain.vue'),
+      children:[{
+
+        path:"/tree",
+        name:"tree",
+        component:() => import("@/view/tree/tree.vue")
+
+      }]
+    },
+    {
+      path:"/srcean",
+      name:"screan",
+      component:() => import("@/view/Screan.vue")
+
+    },
+
+
 
   ]
 })

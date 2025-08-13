@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forest.mapper.TreeSpeciesMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.forest.model.persist.entity.TreeSpecies">
+            <id property="id" column="id" />
+            <result property="attachmentName" column="attachment_name" />
+            <result property="scientificName" column="scientific_name" />
+            <result property="family" column="family" />
+            <result property="protectionLevel" column="protection_level" />
+            <result property="height" column="height" />
+            <result property="diameter" column="diameter" />
+            <result property="lifespan" column="lifespan" />
+            <result property="growthEnvironment" column="growth_environment" />
+            <result property="uses" column="uses" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,attachment_name,scientific_name,family,protection_level,height,
+        diameter,lifespan,growth_environment,uses
+    </sql>
+</mapper>

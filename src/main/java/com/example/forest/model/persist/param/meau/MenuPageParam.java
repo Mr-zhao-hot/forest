@@ -1,29 +1,28 @@
-package com.example.forest.model.persist.entity;
+package com.example.forest.model.persist.param.meau;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
 
-/**
- * 
- * @TableName menu
- */
-@TableName(value ="menu")
+import java.io.Serializable;
+
 @Data
-public class Menu implements Serializable {
+public class MenuPageParam implements Serializable {
+
     /**
-     * 
+     * 一页显示多少数据
      */
-    @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Integer pageSize;
+
+
+    /**
+     * 页码
+     */
+    private Integer pageNumber;
 
     /**
      * 父菜单ID
      */
-    private Integer parent_id;
+    private Long parent_id;
 
     /**
      * 菜单名称

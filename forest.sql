@@ -143,8 +143,41 @@ CREATE TABLE `menu` (
                         KEY `parent_id` (`parent_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
 
+-- 清空表（测试用）
+TRUNCATE TABLE `menu`;
+
+-- 插入顶级菜单
 INSERT INTO `menu` (`id`, `parent_id`, `name`, `path`, `component`, `title`, `icon`, `sort`, `hidden`, `always_show`, `redirect`, `meta`) VALUES
-                                                                                                                                              (1, 0, 'Dashboard', '/dashboard', 'Layout', '控制台', 'dashboard', 1, 0, 1, '/dashboard/index', '{"title":"控制台","icon":"dashboard"}');
+                                                                                                                                              (1, NULL, 'Dashboard', '/dashboard', 'Layout', '控制台', 'dashboard', 1, 0, 1, '/dashboard/index', '{"title": "控制台", "icon": "dashboard"}'),
+
+-- 系统管理模块
+                                                                                                                                              (2, NULL, 'System', '/system', 'Layout', '系统管理', 'system', 2, 0, 1, '/system/user', '{"title": "系统管理", "icon": "system"}'),
+                                                                                                                                              (3, 2, 'User', 'user', 'system/user/index', '用户管理', 'user', 1, 0, 0, NULL, '{"title": "用户管理", "roles": ["admin"]}'),
+                                                                                                                                              (4, 2, 'Role', 'role', 'system/role/index', '角色管理', 'peoples', 2, 0, 0, NULL, '{"title": "角色管理"}'),
+                                                                                                                                              (5, 2, 'Menu', 'menu', 'system/menu/index', '菜单管理', 'tree-table', 3, 0, 0, NULL, '{"title": "菜单管理"}'),
+
+-- 业务菜单示例
+                                                                                                                                              (6, NULL, 'Business', '/business', 'Layout', '业务中心', 'shopping', 3, 0, 1, '/business/order', '{"title": "业务中心"}'),
+                                                                                                                                              (7, 6, 'Order', 'order', 'business/order/index', '订单管理', 'order', 1, 0, 0, NULL, '{"title": "订单管理"}'),
+                                                                                                                                              (8, 6, 'Product', 'product', 'business/product/index', '产品管理', 'product', 2, 0, 0, NULL, '{"title": "产品管理"}'),
+
+-- 隐藏菜单示例
+                                                                                                                                              (9, NULL, 'Monitor', '/monitor', 'Layout', '系统监控', 'monitor', 4, 1, 1, '/monitor/online', '{"title": "系统监控", "hidden": true}'),
+                                                                                                                                              (10, 9, 'Online', 'online', 'monitor/online/index', '在线用户', 'online', 1, 0, 0, NULL, '{"title": "在线用户"}'),
+
+-- 三级菜单示例
+                                                                                                                                              (11, 8, 'Category', 'category', 'business/product/category', '产品分类', 'category', 1, 0, 0, NULL, '{"title": "产品分类"}'),
+
+-- 外链菜单示例
+                                                                                                                                              (12, NULL, 'External', 'https://example.com', NULL, '外部链接', 'link', 5, 0, 0, NULL, '{"title": "外部链接", "external": true}'),
+
+-- 单级隐藏菜单
+                                                                                                                                              (13, NULL, 'Log', '/log', 'Layout', '日志管理', 'log', 6, 0, 0, '/log/login', '{"title": "日志管理"}'),
+                                                                                                                                              (14, 13, 'LoginLog', 'login', 'monitor/log/login', '登录日志', 'logininfor', 1, 0, 0, NULL, '{"title": "登录日志"}'),
+                                                                                                                                              (15, 13, 'OperLog', 'oper', 'monitor/log/oper', '操作日志', 'operation', 2, 0, 0, NULL, '{"title": "操作日志"}'),
+
+-- 功能示例（无页面菜单）
+                                                                                                                                              (16, 5, 'MenuAdd', NULL, NULL, '菜单新增', 'add', 1, 0, 0, NULL, '{"title": "菜单新增", "noCache": true, "action": "add"}');
 
 
 CREATE TABLE `role_menu` (
@@ -168,7 +201,27 @@ CREATE TABLE tree_species (
                               growth_environment VARCHAR(255) COMMENT '生长环境',
                               uses TEXT COMMENT '用途'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='树种信息表';
-
+INSERT INTO tree_species (attachment_name, scientific_name, family, protection_level, height, diameter, lifespan, growth_environment, uses) VALUES
+                                                                                                                                                ('银杏', 'Ginkgo biloba', '银杏科', '国家一级', 40.00, 400.00, 3000, '喜光，耐寒，适应性强，适宜深厚肥沃的土壤', '药用、观赏、木材、食用'),
+                                                                                                                                                ('水杉', 'Metasequoia glyptostroboides', '杉科', '国家一级', 35.00, 250.00, 600, '湿润气候，喜水湿，耐寒，适宜河岸、低湿地', '观赏、木材、生态修复'),
+                                                                                                                                                ('珙桐', 'Davidia involucrata', '蓝果树科', '国家一级', 20.00, 100.00, 100, '湿润凉爽气候，喜阴湿，适宜海拔1000-2000米山区', '观赏、科研'),
+                                                                                                                                                ('红豆杉', 'Taxus chinensis', '红豆杉科', '国家一级', 30.00, 100.00, 5000, '阴湿环境，耐寒，适宜海拔1000-1500米山地', '药用、观赏、木材'),
+                                                                                                                                                ('樟树', 'Cinnamomum camphora', '樟科', '国家二级', 30.00, 300.00, 1000, '温暖湿润气候，喜光，适宜深厚肥沃土壤', '木材、药用、香料'),
+                                                                                                                                                ('楠木', 'Phoebe zhennan', '樟科', '国家二级', 30.00, 150.00, 500, '温暖湿润气候，喜阴湿，适宜海拔1000米以下山地', '高档家具、建筑'),
+                                                                                                                                                ('马尾松', 'Pinus massoniana', '松科', NULL, 45.00, 100.00, 150, '耐干旱瘠薄，适应性强，喜酸性土壤', '木材、造纸、松脂'),
+                                                                                                                                                ('毛白杨', 'Populus tomentosa', '杨柳科', NULL, 30.00, 100.00, 50, '适应性强，耐寒耐旱，适宜平原地区', '木材、防护林、造纸'),
+                                                                                                                                                ('槐树', 'Sophora japonica', '豆科', NULL, 25.00, 150.00, 300, '耐旱耐寒，适应性强，喜光', '木材、药用、蜜源'),
+                                                                                                                                                ('梧桐', 'Firmiana simplex', '梧桐科', NULL, 16.00, 80.00, 100, '喜光，耐旱，适宜温暖气候', '观赏、木材'),
+                                                                                                                                                ('油松', 'Pinus tabuliformis', '松科', NULL, 25.00, 80.00, 200, '耐寒耐旱，适应性强，喜光', '木材、造林、观赏'),
+                                                                                                                                                ('白桦', 'Betula platyphylla', '桦木科', NULL, 27.00, 50.00, 80, '耐寒，喜光，适宜湿润土壤', '木材、造纸、观赏'),
+                                                                                                                                                ('橡树', 'Quercus robur', '壳斗科', NULL, 35.00, 200.00, 500, '耐寒耐旱，适应性强，喜深厚土壤', '木材、酿酒、生态'),
+                                                                                                                                                ('枫树', 'Acer palmatum', '槭树科', NULL, 15.00, 60.00, 100, '喜阴湿，耐寒，适宜温带气候', '观赏、木材'),
+                                                                                                                                                ('柳树', 'Salix babylonica', '杨柳科', NULL, 12.00, 40.00, 50, '喜水湿，耐寒，适应性强', '观赏、编织、生态修复'),
+                                                                                                                                                ('雪松', 'Cedrus deodara', '松科', NULL, 40.00, 150.00, 300, '喜光，耐寒，适宜高海拔地区', '观赏、木材、香料'),
+                                                                                                                                                ('紫薇', 'Lagerstroemia indica', '千屈菜科', NULL, 8.00, 30.00, 100, '喜光耐旱，适应性强', '观赏、药用'),
+                                                                                                                                                ('樱花', 'Prunus serrulata', '蔷薇科', NULL, 10.00, 40.00, 60, '喜光，适宜温带气候', '观赏'),
+                                                                                                                                                ('榕树', 'Ficus microcarpa', '桑科', NULL, 20.00, 200.00, 200, '喜温暖湿润气候，耐修剪', '观赏、遮荫、生态'),
+                                                                                                                                                ('椰子树', 'Cocos nucifera', '棕榈科', NULL, 30.00, 50.00, 80, '热带气候，喜阳光充足和海边环境', '食用、纤维、观赏');
 CREATE TABLE region_area (
                              id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
                              region_name VARCHAR(100) NOT NULL COMMENT '区域名称',
@@ -210,4 +263,20 @@ FROM system_user u
          LEFT JOIN user_role ur on ur.user_id = u.user_id
          LEFT JOIN role_permission rp on rp.role_id = ur.role_id
          LEFT JOIN permission p on p.permission_id = rp.permission_id
-WHERE u.phone = 14740178387
+WHERE u.phone = 14740178387;
+
+
+
+-- 查看完整菜单树
+SELECT m1.title AS l1, m2.title AS l2, m3.title AS l3
+FROM menu m1
+         LEFT JOIN menu m2 ON m2.parent_id = m1.id
+         LEFT JOIN menu m3 ON m3.parent_id = m2.id
+WHERE m1.parent_id IS NULL
+ORDER BY m1.sort, m2.sort, m3.sort;
+
+-- 检查隐藏菜单
+SELECT * FROM menu WHERE hidden = 1;
+
+-- 检查外链菜单
+SELECT * FROM menu WHERE component IS NULL AND path LIKE 'http%';

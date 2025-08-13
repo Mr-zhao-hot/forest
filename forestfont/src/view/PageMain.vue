@@ -4,41 +4,38 @@
       :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }"
     >
       <div class="logo" >
-        22
+        智慧林业系统
       </div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1">
           <pie-chart-outlined />
-          <span>Option 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <desktop-outlined />
-          <span>Option 2</span>
+          <span>首页</span>
         </a-menu-item>
         <a-sub-menu key="sub1">
           <template #title>
             <span>
               <user-outlined />
-              <span>User</span>
+              <span>森林资源管理</span>
             </span>
           </template>
-          <a-menu-item key="3">Tom</a-menu-item>
-          <a-menu-item key="4">Bill</a-menu-item>
-          <a-menu-item key="5">Alex</a-menu-item>
+          <router-link to="/tree"><a-menu-item key="3">树种管理</a-menu-item></router-link>
+          <a-menu-item key="4">区域管理</a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
           <template #title>
             <span>
               <team-outlined />
-              <span>Team</span>
+              <span>森林安全管理</span>
             </span>
           </template>
-          <a-menu-item key="6">Team 1</a-menu-item>
-          <a-menu-item key="8">Team 2</a-menu-item>
+          <a-menu-item key="6">实时定位</a-menu-item>
+          <a-menu-item key="8">定位记录</a-menu-item>
+          <a-menu-item key="9">巡场记录</a-menu-item>
+          <a-menu-item key="10">火灾报警记录</a-menu-item>
         </a-sub-menu>
-        <a-menu-item key="9">
+        <a-menu-item key="11">
           <file-outlined />
-          <span>File</span>
+          <span>智能小创Ai助手</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
