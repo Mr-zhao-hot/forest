@@ -15,46 +15,44 @@ const httpInstance = axios.create({
 })
 
 
-httpInstance.interceptors.request.use((config) => {
-// debugger
-    var token = localStorage.getItem("accessToken")
+httpInstance.interceptors.request.use(
+  (config) => {
+    // debugger
+    const token = localStorage.getItem('accessToken')
     // 白名单路由（不需要token的接口）
-    const whiteList = [
-        '',
-        'http://localhost:8080/role/selects'
-    ];
+    const whiteList = ['', 'http://localhost:8080/role/selects']
 
     // 获取请求URL（处理可能为undefined的情况）
-    const requestUrl = config.url || '';
+    const requestUrl = config.url || ''
 
     // 检查是否在白名单
-    const isWhiteList = whiteList.some(api =>
-        requestUrl.startsWith(api) ||  // 匹配路径开头
-        (config.baseURL && requestUrl.startsWith(`${config.baseURL}${api}`))
-    );
+    const isWhiteList = whiteList.some(
+      (api) =>
+        requestUrl.startsWith(api) || // 匹配路径开头
+        (config.baseURL && requestUrl.startsWith(`${config.baseURL}${api}`)),
+    )
 
     // 非白名单请求需要token
     if (!isWhiteList) {
-
-
-        if (!token) {
-            const error = new Error('未提供token，请先登录');
-            message.error(error.message);
-            return Promise.reject(error);
-        }
-        console.log(token);
-        // 确保 headers 对象存在
-
+      if (!token) {
+        const error = new Error('未提供token，请先登录')
+        message.error(error.message)
+        return Promise.reject(error)
+      }
+      console.log(token)
+      // 确保 headers 对象存在
     }
-    config.headers = config.headers || {};
+    config.headers = config.headers || {}
 
-    config.headers.Authorization =  token
-    return config;
-}, (error) => {
+    config.headers.Authorization = token
+    return config
+  },
+  (error) => {
     // 请求配置错误的统一处理
-    message.error('请求配置错误');
-    return Promise.reject(error);
-});
+    message.error('请求配置错误')
+    return Promise.reject(error)
+  },
+)
 
 
 httpInstance.interceptors.response.use(

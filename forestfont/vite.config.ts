@@ -28,7 +28,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "@/assets/scss/_variables.scss" as vars;`,
+        // additionalData: `@use "@/assets/scss/_variables.scss" as vars;`,
       },
       less: {
         javascriptEnabled: true,

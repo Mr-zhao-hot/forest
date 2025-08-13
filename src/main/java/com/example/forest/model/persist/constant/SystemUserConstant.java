@@ -1,6 +1,11 @@
 package com.example.forest.model.persist.constant;
 
-public class SystemUserConstant {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class SystemUserConstant implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     // 登录缓存
     public static final String SYSTEM_USER = "SystemUser:";

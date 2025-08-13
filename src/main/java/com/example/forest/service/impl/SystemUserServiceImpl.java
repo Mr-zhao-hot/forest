@@ -7,10 +7,10 @@ import com.example.forest.mapper.SystemUserMapper;
 import com.example.forest.mapper.UserRoleMapper;
 import com.example.forest.model.cache.impl.SystemUserCacheImpl;
 import com.example.forest.model.persist.entity.SystemUser;
-import com.example.forest.model.persist.param.systemuserparam.SystemUserRegisterParam;
+import com.example.forest.model.persist.param.systemuser.SystemUserRegisterParam;
 import com.example.forest.model.persist.po.systemuserpo.SystemUserLoginPo;
-import com.example.forest.model.persist.vo.systemuservo.SystemUserLoginInfoVo;
-import com.example.forest.model.persist.vo.systemuservo.SystemUserVo;
+import com.example.forest.model.persist.vo.systemuser.SystemUserLoginInfoVo;
+import com.example.forest.model.persist.vo.systemuser.SystemUserVo;
 import com.example.forest.service.SystemUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -52,50 +52,42 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Resource
     private UserRoleMapper userRoleMapper;
 
-    // 用户登录
     @Override
     public SystemUserVo login(String phone, String password, String remoteAddr, String again) {
-        // 判断用户是否输入正确
+        // 参数验证
         if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
-            throw new BusinessException(ServiceCode.FAIL_CODE,"密码和账号不能为空");
+            throw new BusinessException(ServiceCode.FAIL_CODE,"账号和密码不能为空");
         }
 
-        SystemUserVo systemUserVo = new SystemUserVo();
         // 先查缓存
-        SystemUserVo systemUserVo1 = systemUserCacheImpl.selectLoginInfo();
-        if (systemUserVo1 != null) {
-          BeanUtils.copyProperties(systemUserVo1, systemUserVo);
-          return systemUserVo;
+        SystemUserVo cachedUser = systemUserCacheImpl.selectLoginInfo();
+        if (cachedUser != null) {
+            return cachedUser;
         }
-        // 登录逻辑
+
+        // 数据库查询
         SystemUserLoginInfoVo loginInfo = systemUserMapper.selectLoginInfo(phone);
-
-
-        if (!passwordEncoder.matches(password, loginInfo.getPassword())) {
+        if (loginInfo == null || !passwordEncoder.matches(password, loginInfo.getPassword())) {
             throw new BusinessException(ServiceCode.FAIL_CODE, "用户名或密码错误");
         }
 
-        // 返回给前端显示数据
-        SystemUserVo systemUserVo2 = new SystemUserVo();
-        systemUserVo.setLastLoginIp(remoteAddr);
-        BeanUtils.copyProperties(loginInfo, systemUserVo2);
+        // 构建返回对象
+        SystemUserVo result = new SystemUserVo();
+        BeanUtils.copyProperties(loginInfo, result);
+        result.setLastLoginIp(remoteAddr);
+        result.setToken(buildJwtToken(phone));
 
-        // 传入token
-        String token = buildJwtToken(phone);
-        systemUserVo.setToken(token);
+        // 缓存用户信息
+        systemUserCacheImpl.setLoginInfo(result);
 
-        // 存入用户登录信息缓存
-        BeanUtils.copyProperties(loginInfo, systemUserVo);
-        systemUserCacheImpl.setLoginInfo(systemUserVo);
+        // 缓存权限信息
+        SystemUserLoginPo permissionInfo = new SystemUserLoginPo();
+        permissionInfo.setRemoteAddr(remoteAddr);
+        permissionInfo.setAgain(again);
+        permissionInfo.setPermissionCodeList(loginInfo.getPermissionCodeList());
+        systemUserCacheImpl.setLoginPermissionInfo(result.getToken(), permissionInfo);
 
-
-        // 存入缓存 权限信息缓存
-        SystemUserLoginPo systemUserLoginPo = new SystemUserLoginPo();
-        systemUserLoginPo.setRemoteAddr(remoteAddr);
-        systemUserLoginPo.setAgain(again);
-        systemUserLoginPo.setPermissionCodeList(loginInfo.getPermissionCodeList());
-        systemUserCacheImpl.setLoginPermissionInfo(token, systemUserLoginPo);
-        return systemUserVo;
+        return result;
     }
 
 

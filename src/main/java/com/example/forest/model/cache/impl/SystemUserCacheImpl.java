@@ -4,8 +4,7 @@ package com.example.forest.model.cache.impl;
 import com.example.forest.model.cache.SystemUserCache;
 import com.example.forest.model.persist.constant.SystemUserConstant;
 import com.example.forest.model.persist.po.systemuserpo.SystemUserLoginPo;
-import com.example.forest.model.persist.vo.systemuservo.SystemUserLoginInfoVo;
-import com.example.forest.model.persist.vo.systemuservo.SystemUserVo;
+import com.example.forest.model.persist.vo.systemuser.SystemUserVo;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -48,12 +47,4 @@ public class SystemUserCacheImpl implements SystemUserCache {
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(SystemUserConstant.SYSTEM_USER_ID, loginInfo,durationInMinute, TimeUnit.MINUTES);
     }
-
-
-
-
-
-
-
-
 }

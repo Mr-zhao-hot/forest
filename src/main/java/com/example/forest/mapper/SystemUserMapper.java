@@ -3,10 +3,8 @@ package com.example.forest.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import com.example.forest.model.persist.entity.SystemUser;
-import com.example.forest.model.persist.vo.systemuservo.SystemUserLoginInfoVo;
+import com.example.forest.model.persist.vo.systemuser.SystemUserLoginInfoVo;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
 * @author Mr_zh

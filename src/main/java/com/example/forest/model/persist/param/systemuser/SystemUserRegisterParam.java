@@ -1,4 +1,4 @@
-package com.example.forest.model.persist.param.systemuserparam;
+package com.example.forest.model.persist.param.systemuser;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;

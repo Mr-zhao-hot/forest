@@ -3,11 +3,8 @@ package com.example.forest.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import com.example.forest.model.persist.entity.SystemUser;
-import com.example.forest.model.persist.param.systemuserparam.SystemUserRegisterParam;
-import com.example.forest.model.persist.vo.systemuservo.SystemUserVo;
-import com.github.pagehelper.PageInfo;
-
-import java.util.List;
+import com.example.forest.model.persist.param.systemuser.SystemUserRegisterParam;
+import com.example.forest.model.persist.vo.systemuser.SystemUserVo;
 
 /**
 * @author Mr_zh

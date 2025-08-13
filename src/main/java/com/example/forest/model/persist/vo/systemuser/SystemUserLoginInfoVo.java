@@ -1,22 +1,29 @@
-package com.example.forest.model.persist.vo.systemuservo;
-
+package com.example.forest.model.persist.vo.systemuser;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SystemUserVo {
+import java.util.List;
 
+@Data
+public class SystemUserLoginInfoVo implements Serializable {
+
+    /**
+     * 用户ID
+     */
+    private Integer userId;
 
     /**
      * 用户名
      */
     private String username;
+
+    /**
+     * 密码(加密存储)
+     */
+    private String password;
 
 
     /**
@@ -58,7 +65,7 @@ public class SystemUserVo {
     private Date updateTime;
 
     /**
-     * 设置token
+     * 权限列表
      */
-    private String token;
+    private List<String> permissionCodeList;
 }

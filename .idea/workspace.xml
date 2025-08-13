@@ -4,7 +4,60 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c327622-8044-439d-89bd-3b24e9391ce4" name="更改" comment="" />
+    <list default="true" id="7c327622-8044-439d-89bd-3b24e9391ce4" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/forestfont/src/api/LoginApi.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forestfont/src/api/RoleApi.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forestfont/src/stores/StudentPageStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forestfont/src/view/Login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forestfont/src/view/PageMain.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forestfont/src/view/StudentPage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/controller/MenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/cache/MenuCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/cache/impl/MenuCacheImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/constant/MenuConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/param/meau/MenuParam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/vo/menu/MenuVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/20042035-7a27-4cb7-927f-8ada67c58221.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/20042035-7a27-4cb7-927f-8ada67c58221.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forest.sql" beforeDir="false" afterPath="$PROJECT_DIR$/forest.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forestfont/components.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/forestfont/components.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forestfont/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/forestfont/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forestfont/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/forestfont/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forestfont/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/forestfont/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forestfont/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/forestfont/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forestfont/src/utils/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/forestfont/src/utils/http.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forestfont/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/forestfont/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/common/JsonOk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/common/JsonOk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/mapper/SystemUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/mapper/SystemUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/model/cache/SystemUserCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/cache/SystemUserCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/model/cache/impl/SystemUserCacheImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/cache/impl/SystemUserCacheImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/constant/SystemUserConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/constant/SystemUserConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/param/systemuserparam/SystemUserLoginParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/param/systemuser/SystemUserLoginParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/param/systemuserparam/SystemUserRegisterParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/param/systemuser/SystemUserRegisterParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/vo/systemuservo/SystemUserLoginInfoVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/vo/systemuser/SystemUserLoginInfoVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/vo/systemuservo/SystemUserVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/model/persist/vo/systemuser/SystemUserVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/service/SystemUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/service/SystemUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/forest/service/impl/SystemUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/forest/service/impl/SystemUserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/SystemUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/SystemUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/common/JsonOk.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/common/JsonOk.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/mapper/SystemUserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/mapper/SystemUserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/model/cache/SystemUserCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/model/cache/SystemUserCache.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/model/cache/impl/SystemUserCacheImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/model/cache/impl/SystemUserCacheImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/model/persist/constant/SystemUserConstant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/model/persist/constant/SystemUserConstant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/model/persist/param/systemuserparam/SystemUserLoginParam.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/model/persist/param/systemuserparam/SystemUserRegisterParam.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/model/persist/vo/systemuservo/SystemUserLoginInfoVo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/model/persist/vo/systemuservo/SystemUserVo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/service/SystemUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/service/SystemUserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/forest/service/impl/SystemUserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/forest/service/impl/SystemUserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/SystemUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/SystemUserMapper.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,6 +110,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ForestApplication.executor": "Debug",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Mr_zh/Desktop/项目/林场/forest",
     "node.js.detected.package.eslint": "true",
@@ -64,7 +118,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\Mr_zh\\Desktop\\项目\\林场\\forest\\forestfont\\forestfont\\node_modules\\prettier",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\Mr_zh\\Desktop\\项目\\林场\\forest\\forestfont\\node_modules\\prettier",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
   },
@@ -131,6 +185,7 @@
       <workItem from="1755050714174" duration="3175000" />
       <workItem from="1755053941782" duration="100000" />
       <workItem from="1755054070872" duration="104000" />
+      <workItem from="1755054187087" duration="11932000" />
     </task>
     <servers />
   </component>

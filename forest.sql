@@ -125,7 +125,7 @@ CREATE TABLE `user_role`  (
 INSERT INTO `user_role` VALUES (1, 1, 1, '2025-07-10 16:23:46');
 
 
-
+DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
                         `id` bigint NOT NULL AUTO_INCREMENT,
                         `parent_id` bigint DEFAULT NULL COMMENT '父菜单ID',
@@ -141,8 +141,10 @@ CREATE TABLE `menu` (
                         `meta` json DEFAULT NULL COMMENT '元数据',
                         PRIMARY KEY (`id`),
                         KEY `parent_id` (`parent_id`)
-);
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
 
+INSERT INTO `menu` (`id`, `parent_id`, `name`, `path`, `component`, `title`, `icon`, `sort`, `hidden`, `always_show`, `redirect`, `meta`) VALUES
+                                                                                                                                              (1, 0, 'Dashboard', '/dashboard', 'Layout', '控制台', 'dashboard', 1, 0, 1, '/dashboard/index', '{"title":"控制台","icon":"dashboard"}');
 
 
 CREATE TABLE `role_menu` (
