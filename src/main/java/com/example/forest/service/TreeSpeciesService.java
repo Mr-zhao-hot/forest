@@ -2,7 +2,12 @@ package com.example.forest.service;
 
 import com.example.forest.model.persist.entity.TreeSpecies;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.forest.model.persist.param.tree.TreeSpeciesPageParam;
+import com.example.forest.model.persist.param.tree.TreeSpeciesParam;
 import com.example.forest.model.persist.vo.tree.TreeSpeciesVo;
+import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 /**
 * @author Mr_zh
@@ -12,4 +17,16 @@ import com.example.forest.model.persist.vo.tree.TreeSpeciesVo;
 public interface TreeSpeciesService extends IService<TreeSpecies> {
 
     TreeSpeciesVo selectById(Integer id);
+
+    List<TreeSpeciesVo> selects();
+
+    void addTree(TreeSpeciesParam treeSpeciesParam);
+
+    void updateTree(TreeSpeciesParam treeSpeciesParam, Integer id);
+
+    void deleteTree(Integer id);
+
+    void deleteTrees(List<Integer> ids);
+
+    PageInfo<TreeSpecies> pageSelectTree(TreeSpeciesPageParam treeSpeciesPageParam);
 }

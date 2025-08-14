@@ -21,4 +21,8 @@
         id,attachment_name,scientific_name,family,protection_level,height,
         diameter,lifespan,growth_environment,uses
     </sql>
+    <select id="selects" resultType="com.example.forest.model.persist.vo.tree.TreeSpeciesVo">
+        select  id,attachment_name,scientific_name,family,protection_level,height,
+                diameter,lifespan,growth_environment,uses from tree_species
+    </select>
 </mapper>
