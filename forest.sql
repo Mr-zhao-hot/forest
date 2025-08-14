@@ -202,35 +202,69 @@ CREATE TABLE tree_species (
                               uses TEXT COMMENT '用途'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='树种信息表';
 INSERT INTO tree_species (attachment_name, scientific_name, family, protection_level, height, diameter, lifespan, growth_environment, uses) VALUES
-                                                                                                                                                ('银杏', 'Ginkgo biloba', '银杏科', '国家一级', 40.00, 400.00, 3000, '喜光，耐寒，适应性强，适宜深厚肥沃的土壤', '药用、观赏、木材、食用'),
-                                                                                                                                                ('水杉', 'Metasequoia glyptostroboides', '杉科', '国家一级', 35.00, 250.00, 600, '湿润气候，喜水湿，耐寒，适宜河岸、低湿地', '观赏、木材、生态修复'),
-                                                                                                                                                ('珙桐', 'Davidia involucrata', '蓝果树科', '国家一级', 20.00, 100.00, 100, '湿润凉爽气候，喜阴湿，适宜海拔1000-2000米山区', '观赏、科研'),
-                                                                                                                                                ('红豆杉', 'Taxus chinensis', '红豆杉科', '国家一级', 30.00, 100.00, 5000, '阴湿环境，耐寒，适宜海拔1000-1500米山地', '药用、观赏、木材'),
-                                                                                                                                                ('樟树', 'Cinnamomum camphora', '樟科', '国家二级', 30.00, 300.00, 1000, '温暖湿润气候，喜光，适宜深厚肥沃土壤', '木材、药用、香料'),
-                                                                                                                                                ('楠木', 'Phoebe zhennan', '樟科', '国家二级', 30.00, 150.00, 500, '温暖湿润气候，喜阴湿，适宜海拔1000米以下山地', '高档家具、建筑'),
-                                                                                                                                                ('马尾松', 'Pinus massoniana', '松科', NULL, 45.00, 100.00, 150, '耐干旱瘠薄，适应性强，喜酸性土壤', '木材、造纸、松脂'),
-                                                                                                                                                ('毛白杨', 'Populus tomentosa', '杨柳科', NULL, 30.00, 100.00, 50, '适应性强，耐寒耐旱，适宜平原地区', '木材、防护林、造纸'),
-                                                                                                                                                ('槐树', 'Sophora japonica', '豆科', NULL, 25.00, 150.00, 300, '耐旱耐寒，适应性强，喜光', '木材、药用、蜜源'),
-                                                                                                                                                ('梧桐', 'Firmiana simplex', '梧桐科', NULL, 16.00, 80.00, 100, '喜光，耐旱，适宜温暖气候', '观赏、木材'),
-                                                                                                                                                ('油松', 'Pinus tabuliformis', '松科', NULL, 25.00, 80.00, 200, '耐寒耐旱，适应性强，喜光', '木材、造林、观赏'),
-                                                                                                                                                ('白桦', 'Betula platyphylla', '桦木科', NULL, 27.00, 50.00, 80, '耐寒，喜光，适宜湿润土壤', '木材、造纸、观赏'),
-                                                                                                                                                ('橡树', 'Quercus robur', '壳斗科', NULL, 35.00, 200.00, 500, '耐寒耐旱，适应性强，喜深厚土壤', '木材、酿酒、生态'),
-                                                                                                                                                ('枫树', 'Acer palmatum', '槭树科', NULL, 15.00, 60.00, 100, '喜阴湿，耐寒，适宜温带气候', '观赏、木材'),
-                                                                                                                                                ('柳树', 'Salix babylonica', '杨柳科', NULL, 12.00, 40.00, 50, '喜水湿，耐寒，适应性强', '观赏、编织、生态修复'),
-                                                                                                                                                ('雪松', 'Cedrus deodara', '松科', NULL, 40.00, 150.00, 300, '喜光，耐寒，适宜高海拔地区', '观赏、木材、香料'),
-                                                                                                                                                ('紫薇', 'Lagerstroemia indica', '千屈菜科', NULL, 8.00, 30.00, 100, '喜光耐旱，适应性强', '观赏、药用'),
-                                                                                                                                                ('樱花', 'Prunus serrulata', '蔷薇科', NULL, 10.00, 40.00, 60, '喜光，适宜温带气候', '观赏'),
-                                                                                                                                                ('榕树', 'Ficus microcarpa', '桑科', NULL, 20.00, 200.00, 200, '喜温暖湿润气候，耐修剪', '观赏、遮荫、生态'),
-                                                                                                                                                ('椰子树', 'Cocos nucifera', '棕榈科', NULL, 30.00, 50.00, 80, '热带气候，喜阳光充足和海边环境', '食用、纤维、观赏');
-CREATE TABLE region_area (
-                             id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
-                             region_name VARCHAR(100) NOT NULL COMMENT '区域名称',
-                             sequence varchar(10) not null comment '顺序',
-                             area_hectares DECIMAL(12,2) NOT NULL COMMENT '面积(公顷)',
-                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='区域面积表';
+('银杏', 'Ginkgo biloba', '银杏科', '国家一级', 40.00, 400.00, 3000, '喜光，耐寒，适应性强，适宜深厚肥沃的土壤', '药用、观赏、木材、食用'),
+('水杉', 'Metasequoia glyptostroboides', '杉科', '国家一级', 35.00, 250.00, 600, '湿润气候，喜水湿，耐寒，适宜河岸、低湿地', '观赏、木材、生态修复'),
+('珙桐', 'Davidia involucrata', '蓝果树科', '国家一级', 20.00, 100.00, 100, '湿润凉爽气候，喜阴湿，适宜海拔1000-2000米山区', '观赏、科研'),
+('红豆杉', 'Taxus chinensis', '红豆杉科', '国家一级', 30.00, 100.00, 5000, '阴湿环境，耐寒，适宜海拔1000-1500米山地', '药用、观赏、木材'),
+('樟树', 'Cinnamomum camphora', '樟科', '国家二级', 30.00, 300.00, 1000, '温暖湿润气候，喜光，适宜深厚肥沃土壤', '木材、药用、香料'),
+('楠木', 'Phoebe zhennan', '樟科', '国家二级', 30.00, 150.00, 500, '温暖湿润气候，喜阴湿，适宜海拔1000米以下山地', '高档家具、建筑'),
+('马尾松', 'Pinus massoniana', '松科', NULL, 45.00, 100.00, 150, '耐干旱瘠薄，适应性强，喜酸性土壤', '木材、造纸、松脂'),
+('毛白杨', 'Populus tomentosa', '杨柳科', NULL, 30.00, 100.00, 50, '适应性强，耐寒耐旱，适宜平原地区', '木材、防护林、造纸'),
+('槐树', 'Sophora japonica', '豆科', NULL, 25.00, 150.00, 300, '耐旱耐寒，适应性强，喜光', '木材、药用、蜜源'),
+('梧桐', 'Firmiana simplex', '梧桐科', NULL, 16.00, 80.00, 100, '喜光，耐旱，适宜温暖气候', '观赏、木材'),
+('油松', 'Pinus tabuliformis', '松科', NULL, 25.00, 80.00, 200, '耐寒耐旱，适应性强，喜光', '木材、造林、观赏'),
+('白桦', 'Betula platyphylla', '桦木科', NULL, 27.00, 50.00, 80, '耐寒，喜光，适宜湿润土壤', '木材、造纸、观赏'),
+('橡树', 'Quercus robur', '壳斗科', NULL, 35.00, 200.00, 500, '耐寒耐旱，适应性强，喜深厚土壤', '木材、酿酒、生态'),
+('枫树', 'Acer palmatum', '槭树科', NULL, 15.00, 60.00, 100, '喜阴湿，耐寒，适宜温带气候', '观赏、木材'),
+('柳树', 'Salix babylonica', '杨柳科', NULL, 12.00, 40.00, 50, '喜水湿，耐寒，适应性强', '观赏、编织、生态修复'),
+('雪松', 'Cedrus deodara', '松科', NULL, 40.00, 150.00, 300, '喜光，耐寒，适宜高海拔地区', '观赏、木材、香料'),
+('紫薇', 'Lagerstroemia indica', '千屈菜科', NULL, 8.00, 30.00, 100, '喜光耐旱，适应性强', '观赏、药用'),
+('樱花', 'Prunus serrulata', '蔷薇科', NULL, 10.00, 40.00, 60, '喜光，适宜温带气候', '观赏'),
+('榕树', 'Ficus microcarpa', '桑科', NULL, 20.00, 200.00, 200, '喜温暖湿润气候，耐修剪', '观赏、遮荫、生态'),
+('椰子树', 'Cocos nucifera', '棕榈科', NULL, 30.00, 50.00, 80, '热带气候，喜阳光充足和海边环境', '食用、纤维、观赏');
+CREATE TABLE `region_tree` (
+                               `id` bigint PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+                               `parent_id` bigint DEFAULT 0 COMMENT '父节点ID(0表示根节点)',
+                               `name` varchar(100) NOT NULL COMMENT '区域名称',
+                               `sequence` int NOT NULL COMMENT '显示顺序',
+                               `area_hectares` decimal(12,2) NOT NULL COMMENT '面积(公顷)',
+                               `level` tinyint NOT NULL COMMENT '节点层级(1工区/2林班/3小班)',
+                               `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+                               `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='区域树形表';
+INSERT INTO `region_tree`
+(`parent_id`, `name`, `sequence`, `area_hectares`, `level`) VALUES
+-- 顶级工区
+(0, '01工区', 1, 490.00, 1),
+(0, '02工区', 2, 300.00, 1),
 
+-- 01工区下的林班
+(1, '01林班', 1, 100.00, 2),
+(1, '02林班', 2, 100.00, 2),
+(1, '03林班', 3, 140.00, 2),
+
+-- 01林班下的小班
+(3, '01小班', 1, 10.00, 3),
+(3, '02小班', 2, 12.00, 3),
+(3, '03小班', 3, 8.00, 3),
+
+-- 02林班下的小班
+(4, '04小班', 1, 5.00, 3),
+(4, '05小班', 2, 12.00, 3),
+(4, '06小班', 3, 7.00, 3),
+
+-- 03林班下的小班
+(5, '07小班', 1, 8.00, 3),
+(5, '08小班', 2, 10.00, 3),
+(5, '09小班', 3, 9.00, 3),
+
+-- 02工区下的林班
+(2, '04林班', 1, 80.00, 2),
+(2, '05林班', 2, 80.00, 2),
+
+-- 04林班下的小班
+(14, '10小班', 1, 9.00, 3),
+(14, '11小班', 2, 12.00, 3);
 CREATE TABLE region_monitoring (
                                    id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
                                    region_name VARCHAR(100) NOT NULL COMMENT '区域名称',

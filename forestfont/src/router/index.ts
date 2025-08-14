@@ -52,15 +52,26 @@ const router = createRouter({
         {
           path: '/tree',
           name: 'tree',
-          component: () => import('@/view/tree/tree.vue'),
+          component: () => import('@/view/tree/index.vue'),
         },
+        {
+          path:"/AI",
+          name:"Ai",
+          component:() => import('@/view/AI/index.vue'),
+        },
+
       ],
     },
     {
       path: '/srcean',
       name: 'screan',
-      component: () => import('@/view/Screan.vue'),
+      component: () => import('@/view/Screen/Screan.vue'),
     },
+    {
+      path:"/screen",
+      name:"screan",
+      component:() => import("@/view/Screen/Screan.vue")
+    }
   ],
 })
 
