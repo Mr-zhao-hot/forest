@@ -43,30 +43,6 @@ public class TreeSpeciesPageParam implements Serializable {
      */
     private String protectionLevel;
 
-    /**
-     * 高度(m)
-     */
-    private BigDecimal height;
-
-    /**
-     * 直径(cm)
-     */
-    private BigDecimal diameter;
-
-    /**
-     * 寿命(年)
-     */
-    private Integer lifespan;
-
-    /**
-     * 生长环境
-     */
-    private String growthEnvironment;
-
-    /**
-     * 用途
-     */
-    private String uses;
 
     @Serial
     @TableField(exist = false)

@@ -1,19 +1,16 @@
 // axios基础封装
 import axios from 'axios'
 
-import {message} from "ant-design-vue";
-
-
+import { message } from 'ant-design-vue'
 
 // 创建axios实例
 const httpInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080" ,
-    timeout: 15000,
-    headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-    }
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+  timeout: 15000,
+  headers: {
+    'Content-Type': 'application/json;charset=UTF-8',
+  },
 })
-
 
 httpInstance.interceptors.request.use(
   (config) => {
@@ -54,19 +51,18 @@ httpInstance.interceptors.request.use(
   },
 )
 
-
 httpInstance.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        if (error.response?.status === 401) {
-            message.error("登录已过期，请重新登录");
-        } else {
-            message.error(error.response?.data?.message || "请求失败");
-        }
-        return Promise.reject(error);
+  (response) => {
+    return response
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      message.error('登录已过期，请重新登录')
+    } else {
+      message.error(error.response?.data?.message || '请求失败')
     }
-);
+    return Promise.reject(error)
+  },
+)
 
 export default httpInstance

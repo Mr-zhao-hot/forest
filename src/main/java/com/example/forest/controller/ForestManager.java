@@ -5,7 +5,6 @@ import com.example.forest.common.JsonOk;
 import com.example.forest.model.persist.entity.TreeSpecies;
 import com.example.forest.model.persist.param.tree.TreeSpeciesPageParam;
 import com.example.forest.model.persist.param.tree.TreeSpeciesParam;
-import com.example.forest.model.persist.vo.menu.MenuVo;
 import com.example.forest.model.persist.vo.tree.TreeSpeciesVo;
 import com.example.forest.service.TreeSpeciesService;
 import com.github.pagehelper.PageInfo;

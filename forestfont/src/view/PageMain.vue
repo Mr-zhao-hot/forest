@@ -3,9 +3,7 @@
     <a-layout-sider
       :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }"
     >
-      <div class="logo" >
-        智慧林业系统
-      </div>
+      <div class="logo">智慧林业系统</div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1">
           <pie-chart-outlined />
@@ -37,12 +35,13 @@
           <file-outlined />
           <span>智能小创Ai助手</span>
         </a-menu-item>
+
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">
       <a-layout-header :style="{ background: '#fff', padding: 0 }" />
       <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
-        <div :style="{ padding: '24px', background: '#fff', textAlign: 'center' }">
+        <div :style="{ padding: '24px', background: '#fff' }">
           <router-view></router-view>
         </div>
       </a-layout-content>
@@ -53,12 +52,9 @@
   </a-layout>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
-import {
-  UserOutlined,
-  TeamOutlined,
-} from '@ant-design/icons-vue';
-const selectedKeys = ref<string[]>(['4']);
+import { ref } from 'vue'
+import { UserOutlined, TeamOutlined } from '@ant-design/icons-vue'
+const selectedKeys = ref<string[]>(['4'])
 </script>
 <style scoped>
 #components-layout-demo-fixed-sider .logo {
@@ -73,7 +69,7 @@ const selectedKeys = ref<string[]>(['4']);
 [data-theme='dark'] .site-layout .site-layout-background {
   background: #141414;
 }
-.logo{
+.logo {
   border: 1px red solid;
   color: #fff;
 }

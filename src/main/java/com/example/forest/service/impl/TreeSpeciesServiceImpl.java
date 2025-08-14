@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -105,11 +106,18 @@ public class TreeSpeciesServiceImpl extends ServiceImpl<TreeSpeciesMapper, TreeS
         int pageNum = Math.max(treeSpeciesPageParam.getPageNumber(), 1);
         int pageSize = Math.min(treeSpeciesPageParam.getPageSize(), 100);
         QueryWrapper<TreeSpecies> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("attachment_name",treeSpeciesPageParam.getAttachmentName())
-                .like("scientific_name",treeSpeciesPageParam.getScientificName())
-                .like("family",treeSpeciesPageParam.getFamily())
-                .like("protection_level",treeSpeciesPageParam.getProtectionLevel());
-
+        if (StringUtils.hasText(treeSpeciesPageParam.getAttachmentName())) {
+            queryWrapper.like("attachment_name", treeSpeciesPageParam.getAttachmentName());
+        }
+        if (StringUtils.hasText(treeSpeciesPageParam.getScientificName())) {
+            queryWrapper.like("scientific_name", treeSpeciesPageParam.getScientificName());
+        }
+        if (StringUtils.hasText(treeSpeciesPageParam.getFamily())) {
+            queryWrapper.like("family",treeSpeciesPageParam.getFamily());
+        }
+        if (StringUtils.hasText(treeSpeciesPageParam.getProtectionLevel())) {
+            queryWrapper.like("protection_level",treeSpeciesPageParam.getProtectionLevel());
+        }
         PageHelper.startPage(pageNum, pageSize);
         List<TreeSpecies> list = treeSpeciesMapper.selectList(queryWrapper);
 

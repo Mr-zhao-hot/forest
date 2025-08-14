@@ -36,47 +36,41 @@ import { createRouter, createWebHistory } from 'vue-router'
  * - 实现页面访问统计
  */
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'Page',
-      component: () => import('../view/StudentPage.vue')
+      component: () => import('../view/StudentPage.vue'),
     },
     {
       path: '/pageMain',
       name: 'PageMain',
       component: () => import('@/view/PageMain.vue'),
-      children:[{
-
-        path:"/tree",
-        name:"tree",
-        component:() => import("@/view/tree/tree.vue")
-
-      }]
+      children: [
+        {
+          path: '/tree',
+          name: 'tree',
+          component: () => import('@/view/tree/tree.vue'),
+        },
+      ],
     },
     {
-      path:"/srcean",
-      name:"screan",
-      component:() => import("@/view/Screan.vue")
-
+      path: '/srcean',
+      name: 'screan',
+      component: () => import('@/view/Screan.vue'),
     },
-
-
-
-  ]
+  ],
 })
 
-
-function validateToken(token:any) {
+function validateToken(token: any) {
   try {
     const payload = JSON.parse(atob(token.split('.')[1])) // 解析JWT payload
     const expiresAt = payload.exp * 1000 // 转换为毫秒
     return Date.now() < expiresAt
   } catch (e) {
-    router.push("/")
+    router.push('/')
     return false
   }
 }
@@ -84,8 +78,6 @@ function validateToken(token:any) {
 router.beforeEach(async (to, from, next) => {
   // 1. 定义公开路径
   const publicPaths = ['/', '/login']
-
-
 
   // 2. 获取token
   const token = localStorage.getItem('accessToken')
@@ -133,6 +125,5 @@ router.beforeEach(async (to, from, next) => {
     next('/')
   }
 })
-
 
 export default router
