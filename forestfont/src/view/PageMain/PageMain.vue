@@ -9,17 +9,38 @@
           <pie-chart-outlined />
           <span>首页</span>
         </a-menu-item>
-          <router-link to="/tree"><a-menu-item key="3">树种管理</a-menu-item></router-link>
+
+          <router-link to="/tree" style="color:rgba(255, 255, 255, 0.65);">
+            <a-menu-item key="3">
+              树种管理
+            </a-menu-item>
+          </router-link>
+
+
           <a-menu-item key="4">区域管理</a-menu-item>
 
-
+        <router-link to="/map" style="color:rgba(255, 255, 255, 0.65);">
           <a-menu-item key="6">实时定位</a-menu-item>
+        </router-link>
+
+
           <a-menu-item key="8">定位记录</a-menu-item>
           <a-menu-item key="9">巡场记录</a-menu-item>
           <a-menu-item key="10">火灾报警记录</a-menu-item>
-        <router-link to="/Ai"><a-menu-item key="11">
+
+
+
+        <router-link to="/Ai" style="color:rgba(255, 255, 255, 0.65)">
+          <a-menu-item key="11">
           <span>智能小创Ai助手</span>
-        </a-menu-item></router-link>
+        </a-menu-item>
+        </router-link>
+
+        <router-link to="/key" style="color:rgba(255, 255, 255, 0.65)">
+          <a-menu-item key="12">
+            <span>秘钥管理</span>
+          </a-menu-item>
+        </router-link>
 
       </a-menu>
     </a-layout-sider>
@@ -36,7 +57,7 @@
         </div>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
-        <div :style="{ padding: '24px', background: '#fff' }">
+        <div :style="{  background: '#fff' }">
           <router-view></router-view>
         </div>
       </a-layout-content>
@@ -61,7 +82,13 @@ const selectedKeys = ref<string[]>(['4'])
   background: #141414;
 }
 .logo {
-  border: 1px red solid;
-  color: #fff;
+  color: #2c6e49;
+  position: relative;
+  padding: 8px 20px;
+  display: inline-block;
+  border: none;
+  margin-left: 20px;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
 }
+
 </style>

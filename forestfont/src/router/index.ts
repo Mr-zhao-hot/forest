@@ -42,12 +42,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'Page',
-      component: () => import('../view/StudentPage.vue'),
+      component: () => import('../view/ForestPage/ForestPage.vue'),
     },
     {
       path: '/pageMain',
       name: 'PageMain',
-      component: () => import('@/view/PageMain.vue'),
+      component: () => import('@/view/PageMain/PageMain.vue'),
       children: [
         {
           path: '/tree',
@@ -57,8 +57,18 @@ const router = createRouter({
         {
           path:"/AI",
           name:"Ai",
-          component:() => import('@/view/AI/index.vue'),
+          component:() => import('@/view/ai/index.vue'),
         },
+        {
+          path:"/map",
+          name:"map",
+          component:() => import('@/view/map/index.vue'),
+        },
+        {
+          path:"/key",
+          name:"key",
+          component:() => import('@/view/key/index.vue'),
+        }
 
       ],
     },

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forest.mapper.SecurityKeyMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.forest.model.persist.entity.SecurityKey">
+            <id property="id" column="id" />
+            <result property="keyName" column="key_name" />
+            <result property="keyPassword" column="key_password" />
+            <result property="createdAt" column="created_at" />
+            <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,key_name,key_password,created_at,updated_at
+    </sql>
+</mapper>

@@ -149,29 +149,6 @@ TRUNCATE TABLE `menu`;
 -- 插入顶级菜单
 INSERT INTO `menu` (`id`, `parent_id`, `name`, `path`, `component`, `title`, `icon`, `sort`, `hidden`, `always_show`, `redirect`, `meta`) VALUES
                                                                                                                                               (1, NULL, 'Dashboard', '/dashboard', 'Layout', '控制台', 'dashboard', 1, 0, 1, '/dashboard/index', '{"title": "控制台", "icon": "dashboard"}'),
-
--- 系统管理模块
-                                                                                                                                              (2, NULL, 'System', '/system', 'Layout', '系统管理', 'system', 2, 0, 1, '/system/user', '{"title": "系统管理", "icon": "system"}'),
-                                                                                                                                              (3, 2, 'User', 'user', 'system/user/index', '用户管理', 'user', 1, 0, 0, NULL, '{"title": "用户管理", "roles": ["admin"]}'),
-                                                                                                                                              (4, 2, 'Role', 'role', 'system/role/index', '角色管理', 'peoples', 2, 0, 0, NULL, '{"title": "角色管理"}'),
-                                                                                                                                              (5, 2, 'Menu', 'menu', 'system/menu/index', '菜单管理', 'tree-table', 3, 0, 0, NULL, '{"title": "菜单管理"}'),
-
--- 业务菜单示例
-                                                                                                                                              (6, NULL, 'Business', '/business', 'Layout', '业务中心', 'shopping', 3, 0, 1, '/business/order', '{"title": "业务中心"}'),
-                                                                                                                                              (7, 6, 'Order', 'order', 'business/order/index', '订单管理', 'order', 1, 0, 0, NULL, '{"title": "订单管理"}'),
-                                                                                                                                              (8, 6, 'Product', 'product', 'business/product/index', '产品管理', 'product', 2, 0, 0, NULL, '{"title": "产品管理"}'),
-
--- 隐藏菜单示例
-                                                                                                                                              (9, NULL, 'Monitor', '/monitor', 'Layout', '系统监控', 'monitor', 4, 1, 1, '/monitor/online', '{"title": "系统监控", "hidden": true}'),
-                                                                                                                                              (10, 9, 'Online', 'online', 'monitor/online/index', '在线用户', 'online', 1, 0, 0, NULL, '{"title": "在线用户"}'),
-
--- 三级菜单示例
-                                                                                                                                              (11, 8, 'Category', 'category', 'business/product/category', '产品分类', 'category', 1, 0, 0, NULL, '{"title": "产品分类"}'),
-
--- 外链菜单示例
-                                                                                                                                              (12, NULL, 'External', 'https://example.com', NULL, '外部链接', 'link', 5, 0, 0, NULL, '{"title": "外部链接", "external": true}'),
-
--- 单级隐藏菜单
                                                                                                                                               (13, NULL, 'Log', '/log', 'Layout', '日志管理', 'log', 6, 0, 0, '/log/login', '{"title": "日志管理"}'),
                                                                                                                                               (14, 13, 'LoginLog', 'login', 'monitor/log/login', '登录日志', 'logininfor', 1, 0, 0, NULL, '{"title": "登录日志"}'),
                                                                                                                                               (15, 13, 'OperLog', 'oper', 'monitor/log/oper', '操作日志', 'operation', 2, 0, 0, NULL, '{"title": "操作日志"}'),
@@ -287,6 +264,45 @@ CREATE TABLE azimuth_data (
                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                               INDEX idx_azimuth (azimuth_value) COMMENT '方位角索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方位角数据记录表';
+
+
+CREATE TABLE fire_data (
+                           id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+                           device_id VARCHAR(50) COMMENT '设备编号',
+                           longitude DECIMAL(10, 6) NOT NULL COMMENT '经度',
+                           latitude DECIMAL(10, 6) NOT NULL COMMENT '纬度',
+                           altitude DECIMAL(10, 2) COMMENT '海拔高度(米)',
+                           azimuth DECIMAL(5, 2) COMMENT '方位角(0-360度)',
+                           alarm_level TINYINT NOT NULL DEFAULT 1 COMMENT '报警等级(1-5,1最低)',
+                           alarm_type TINYINT COMMENT '火灾类型(1:烟雾,2:火焰,3:温度,4:其他)',
+                           temperature DECIMAL(5, 2) COMMENT '环境温度(℃)',
+                           smoke_density DECIMAL(5, 2) COMMENT '烟雾浓度(%)',
+                           image_url VARCHAR(255) COMMENT '图片URL',
+                           status TINYINT NOT NULL DEFAULT 0 COMMENT '状态(0:未处理,1:处理中,2:已处理,3:误报)',
+                           create_name VARCHAR(50) NOT NULL COMMENT '创建者/上报人',
+                           create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='火灾报警记录表';
+INSERT INTO fire_data (device_id, longitude, latitude, altitude, azimuth, alarm_level, alarm_type, temperature, smoke_density, image_url, status, create_name) VALUES
+                                                                                                                                                                   ('DEV-001', 116.404269, 39.915378, 45.50, 120.30, 2, 1, 28.50, 15.20, 'http://example.com/images/fire001.jpg', 0, '张三'),
+                                                                                                                                                                   ('DEV-002', 116.412345, 39.925678, 50.20, 45.60, 3, 2, 35.80, 8.50, 'http://example.com/images/fire002.jpg', 1, '李四'),
+                                                                                                                                                                   ('DEV-003', 116.398765, 39.908765, 38.90, 210.75, 1, 3, 42.30, 5.10, 'http://example.com/images/fire003.jpg', 2, '王五'),
+                                                                                                                                                                   ('DEV-004', 116.420987, 39.932109, 55.60, 300.20, 4, 2, 38.70, 25.80, 'http://example.com/images/fire004.jpg', 0, '赵六'),
+                                                                                                                                                                   ('DEV-005', 116.407654, 39.918765, 42.30, 180.45, 2, 1, 31.20, 18.40, 'http://example.com/images/fire005.jpg', 3, '钱七'),
+                                                                                                                                                                   ('DEV-006', 116.415432, 39.927654, 48.70, 90.80, 5, 4, 45.60, 12.30, 'http://example.com/images/fire006.jpg', 1, '孙八'),
+                                                                                                                                                                   ('DEV-007', 116.402109, 39.912345, 40.10, 270.15, 3, 3, 50.20, 7.60, 'http://example.com/images/fire007.jpg', 2, '周九'),
+                                                                                                                                                                   ('DEV-008', 116.425678, 39.935432, 52.80, 135.90, 1, 1, 26.80, 10.50, 'http://example.com/images/fire008.jpg', 0, '吴十'),
+                                                                                                                                                                   ('DEV-009', 116.409876, 39.921098, 46.20, 225.30, 4, 2, 39.40, 22.70, 'http://example.com/images/fire009.jpg', 1, '郑十一'),
+                                                                                                                                                                   ('DEV-010', 116.418765, 39.930987, 49.50, 315.60, 2, 4, 33.90, 9.80, 'http://example.com/images/fire010.jpg', 0, '王十二');
+
+/*关键key*/
+create TABLE security_key(
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+    key_name VARCHAR(20) COMMENT '钥匙名字',
+    key_password VARCHAR(255) comment '钥匙密令',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='密钥';
 
 SELECT
     u.user_id,u.username,u.password,u.email,
