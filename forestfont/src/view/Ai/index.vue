@@ -101,7 +101,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- 输入区域 -->
+      <!-- 输入区域 - 现在固定在底部 -->
       <div class="input-wrapper">
         <Input
           v-model:value="messageInput"
@@ -132,7 +132,7 @@ onMounted(() => {
 .chat-app {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh; /* 使用视口高度确保填满整个屏幕 */
   width: 100%;
   background: #fff;
   overflow: hidden;
@@ -157,6 +157,7 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative; /* 添加相对定位 */
   overflow: hidden;
 }
 
@@ -164,6 +165,7 @@ onMounted(() => {
   flex: 1;
   overflow-y: auto;
   padding: 16px 24px;
+  padding-bottom: 80px; /* 为底部输入框留出空间 */
   scrollbar-width: thin;
   scrollbar-color: #d9d9d9 transparent;
 }
@@ -178,13 +180,17 @@ onMounted(() => {
 }
 
 .input-wrapper {
+  position: absolute; /* 绝对定位固定在底部 */
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 16px 24px;
   background: #fff;
   border-top: 1px solid #f0f0f0;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
-  flex-shrink: 0;
 }
 
+/* 其余样式保持不变 */
 .message {
   margin-bottom: 16px;
   animation: fadeIn 0.3s ease-out;
@@ -275,19 +281,17 @@ onMounted(() => {
   30% { transform: translateY(-4px); }
 }
 
-
 .input-wrapper {
   display: flex;
-  gap: 8px; /* 设置输入框和按钮之间的间距 */
-  align-items: center; /* 垂直居中 */
+  gap: 8px;
+  align-items: center;
 }
 
 .input-box {
-  flex: 1; /* 输入框占据剩余空间 */
+  flex: 1;
 }
 
 .send-button {
-  /* 可以添加一些按钮的特定样式 */
-  white-space: nowrap; /* 防止按钮文字换行 */
+  white-space: nowrap;
 }
 </style>

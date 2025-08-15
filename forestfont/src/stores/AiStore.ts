@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { Ai } from "@/api/AiApi";  // 导入封装好的Ai函数
 
 interface Message {
   role: 'user' | 'assistant';
@@ -24,31 +25,16 @@ export const useChatStore = defineStore('chat', () => {
     });
 
     try {
-      // 模拟 API 调用
-      const response = await fetch('http://localhost:11434/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: "deepseek-r1:8b",
-          messages: messages.value.map(m => ({ role: m.role, content: m.content })),
-          stream: false
-        })
-      });
-
-      if (!response.ok) throw new Error('Network response was not ok');
-
-      const data = await response.json();
-
-      // 添加助手回复
+      const response = await Ai({ content })
+      let responseContent = response.data?.response || "";
+      responseContent = responseContent.replace(/<think>[\s\S]*?<\/think>/, '').trim();
       messages.value.push({
         role: 'assistant',
-        content: data.message?.content || "I couldn't process that request.",
+        content:  responseContent || "我没有收到任何请求 python服务是否已经启动",
         timestamp: Date.now()
       });
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'An unknown error occurred';
+      error.value = err instanceof Error ? err.message : '未知的错误';
     } finally {
       isLoading.value = false;
     }
@@ -56,6 +42,7 @@ export const useChatStore = defineStore('chat', () => {
 
   const clearMessages = () => {
     messages.value = [];
+    error.value = null;  // 清空时也清除错误状态
   };
 
   return {
