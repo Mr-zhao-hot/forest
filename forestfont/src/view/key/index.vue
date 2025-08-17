@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { KeyStore } from '@/stores/KeyStore.ts'
-import { onMounted } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 const key = KeyStore()
 interface TableRecord {
   id:  number | unknown
@@ -10,7 +10,19 @@ import Tip from "@/components/tip/Tip.vue";
 onMounted(()=>{
   key.KeySelectList();
 })
+const formRef = ref();
 
+// 清楚规则校验
+watch(
+  () => key.addKeyTable.open,
+  (open) => {
+    if (open) {
+      nextTick(() => {
+        formRef.value?.clearValidate();
+      });
+    }
+  }
+);
 </script>
 
 <template>
@@ -102,6 +114,7 @@ onMounted(()=>{
       layout="vertical"
       @finish="key.onFinish"
       :rules="key.rules"
+      ref="formRef"
     >
       <a-row :gutter="24">
         <a-col class="gutter-row" :span="8">

@@ -12,3 +12,11 @@ export function weatherApi(cityCode:number,GDapi:string) {
   })
 }
 
+// 获取城市code
+export function TennconGetCityInfo(key:string):void {
+  return CommonInstance({
+    url:""
+  })
+}
+
+

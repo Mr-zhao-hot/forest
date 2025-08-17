@@ -25,7 +25,7 @@
 
 
           <a-menu-item key="8">定位记录</a-menu-item>
-          <router-link to="/equiment" style="color:rgba(255, 255, 255, 0.65);"><a-menu-item key="9">设备列表</a-menu-item></router-link>
+          <router-link to="/equipment" style="color:rgba(255, 255, 255, 0.65);"><a-menu-item key="9">设备列表</a-menu-item></router-link>
           <a-menu-item key="10">火灾报警记录</a-menu-item>
 
 
@@ -59,7 +59,9 @@
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
         <div :style="{  background: '#fff' }">
-          <router-view></router-view>
+
+            <router-view ></router-view>
+
         </div>
       </a-layout-content>
     </a-layout>

@@ -70,9 +70,9 @@ const router = createRouter({
           component:() => import('@/view/key/index.vue'),
         },
         {
-          path:"/equiment",
-          name:"equiment",
-          component:() => import('@/view/equiment/index.vue'),
+          path:"/equipment",
+          name:"equipment",
+          component:() => import('@/view/equipment/index.vue'),
         }
 
       ],

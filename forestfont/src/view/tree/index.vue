@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import { treeStore } from '@/stores/treeStore.ts'
-import {onMounted} from "vue";
+import { treeStore } from '@/stores/TreeStore.ts'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import Tip from "@/components/tip/Tip.vue";
 const tree = treeStore()
 interface TableRecord {
   id: string | number
 }
 
+const formRef = ref();
 
+// 清楚规则校验
+watch(
+  () => tree.treeTable.open,
+  (open) => {
+    if (open) {
+      nextTick(() => {
+        formRef.value?.clearValidate();
+      });
+    }
+  }
+);
 // 表单初始化
 onMounted(()=>{
   tree.treeSelectList();
@@ -119,6 +131,7 @@ onMounted(()=>{
       layout="vertical"
       @finish="tree.onFinish"
       :rules="tree.rules"
+      ref="formRef"
     >
       <a-row :gutter="24">
         <!-- 树种名称 -->
