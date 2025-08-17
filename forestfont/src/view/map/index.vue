@@ -51,6 +51,7 @@ const initMap = async () => {
 
     // 创建地图实例
     map.value = new AMapInstance.value.Map('map-container', {
+      showLabel: true,
       rotateEnable: true,
       pitchEnable: true,
       zoom: 17,
@@ -58,7 +59,8 @@ const initMap = async () => {
       rotation: -15,
       viewMode: '3D', // 开启3D视图
       zooms: [2, 20],
-      center: [116.333926, 39.997245]
+      center: [116.333926, 39.997245],
+      mapStyle: 'amap://styles/satellite' // 设置为卫星地图
     })
 
     // 添加控件

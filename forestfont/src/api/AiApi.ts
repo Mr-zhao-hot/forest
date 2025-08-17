@@ -1,7 +1,7 @@
-import AiInstance from '@/utils/AiHttp.ts'
+import CommonInstance from '@/utils/CommonInstance.ts'
 
 export function Ai(content:any){
-    return AiInstance({
+    return CommonInstance({
       url:"/api/chat",
       method:"POST",
       data:content

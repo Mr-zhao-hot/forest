@@ -13,12 +13,17 @@ const { Text } = Typography;
 const chatStore = useChatStore();
 const messageInput = ref('');
 const messagesEndRef = ref<HTMLElement>();
-
+// 图片显示
+const ok = ref<boolean>(true);
 const handleSubmit = async () => {
+  ok.value = false;
   const trimmedMessage = messageInput.value.trim();
 
   if (!trimmedMessage) {
     message.warning('请输入消息内容');
+    if (chatStore.messages.length === 0) {
+      ok.value = true;
+    }
     return;
   }
 
@@ -45,16 +50,22 @@ const scrollToBottom = () => {
   });
 };
 
+
 onMounted(() => {
   scrollToBottom();
 });
 </script>
 
 <template>
+  <!--  logo    -->
+  <div class="pulsing-logo" v-if="ok">
+    <img src="@/assets/img/Ai.png" alt="AI Logo" style="width: 1000px">
+  </div>
+
   <div class="chat-app">
     <!-- 标题栏 -->
     <div class="app-header">
-      <h2>AI 对话助手</h2>
+      <h2>智能小创 Ai助手</h2>
     </div>
 
     <!-- 主聊天区域 -->
@@ -164,10 +175,15 @@ onMounted(() => {
 .messages-wrapper {
   flex: 1;
   overflow-y: auto;
-  padding: 16px 24px;
-  padding-bottom: 80px; /* 为底部输入框留出空间 */
+  border: 3px white solid;
+  padding-bottom: 80px;
   scrollbar-width: thin;
   scrollbar-color: #d9d9d9 transparent;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: center center;
 }
 
 .messages-wrapper::-webkit-scrollbar {
@@ -293,5 +309,20 @@ onMounted(() => {
 
 .send-button {
   white-space: nowrap;
+}
+.pulsing-logo {
+  position: absolute;
+  top: 450px;
+  left: 450px;
+  z-index: 9999;
+  animation: superPulse 0.8s infinite alternate;
+  transform-origin: center;
+}
+
+
+/* 确保动画性能优化 */
+.pulsing-logo img {
+  will-change: filter;
+  backface-visibility: hidden;
 }
 </style>

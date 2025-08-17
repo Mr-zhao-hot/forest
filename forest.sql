@@ -283,17 +283,45 @@ CREATE TABLE fire_data (
                            create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                            update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='火灾报警记录表';
-INSERT INTO fire_data (device_id, longitude, latitude, altitude, azimuth, alarm_level, alarm_type, temperature, smoke_density, image_url, status, create_name) VALUES
-                                                                                                                                                                   ('DEV-001', 116.404269, 39.915378, 45.50, 120.30, 2, 1, 28.50, 15.20, 'http://example.com/images/fire001.jpg', 0, '张三'),
-                                                                                                                                                                   ('DEV-002', 116.412345, 39.925678, 50.20, 45.60, 3, 2, 35.80, 8.50, 'http://example.com/images/fire002.jpg', 1, '李四'),
-                                                                                                                                                                   ('DEV-003', 116.398765, 39.908765, 38.90, 210.75, 1, 3, 42.30, 5.10, 'http://example.com/images/fire003.jpg', 2, '王五'),
-                                                                                                                                                                   ('DEV-004', 116.420987, 39.932109, 55.60, 300.20, 4, 2, 38.70, 25.80, 'http://example.com/images/fire004.jpg', 0, '赵六'),
-                                                                                                                                                                   ('DEV-005', 116.407654, 39.918765, 42.30, 180.45, 2, 1, 31.20, 18.40, 'http://example.com/images/fire005.jpg', 3, '钱七'),
-                                                                                                                                                                   ('DEV-006', 116.415432, 39.927654, 48.70, 90.80, 5, 4, 45.60, 12.30, 'http://example.com/images/fire006.jpg', 1, '孙八'),
-                                                                                                                                                                   ('DEV-007', 116.402109, 39.912345, 40.10, 270.15, 3, 3, 50.20, 7.60, 'http://example.com/images/fire007.jpg', 2, '周九'),
-                                                                                                                                                                   ('DEV-008', 116.425678, 39.935432, 52.80, 135.90, 1, 1, 26.80, 10.50, 'http://example.com/images/fire008.jpg', 0, '吴十'),
-                                                                                                                                                                   ('DEV-009', 116.409876, 39.921098, 46.20, 225.30, 4, 2, 39.40, 22.70, 'http://example.com/images/fire009.jpg', 1, '郑十一'),
-                                                                                                                                                                   ('DEV-010', 116.418765, 39.930987, 49.50, 315.60, 2, 4, 33.90, 9.80, 'http://example.com/images/fire010.jpg', 0, '王十二');
+
+CREATE TABLE equipment(
+                          id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+                          equipment_name varchar(50) comment '设备名称',
+                          status varchar(10) comment '状态',
+                          use_name varchar(20) comment '使用人',
+                          remark TEXT COMMENT '备注',
+                          create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                          update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '设备更新时间'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备登记表';
+-- 带更多字段的完整插入示例（以消防车为例）
+INSERT INTO equipment (
+    equipment_name, status, use_name,
+    remark, create_time, update_time
+) VALUES
+      ('消防车-001', '正常', '张队长',
+       '大型水罐消防车，载水量10吨，2022年购入', '2022-05-10 09:00:00', '2023-06-15 14:30:00'),
+
+      ('消防车-002', '正常', '李副队',
+       '云梯消防车，最大高度32米，2021年购入', '2021-08-15 10:15:00', '2023-05-20 11:20:00'),
+
+      ('消防车-003', '维修', '王队员',
+       '泡沫消防车，发动机故障待修', '2020-11-20 14:00:00', '2023-07-01 16:45:00'),
+
+      ('救援车-001', '正常', '应急小组',
+       '重型救援车，配备液压破拆工具组', '2023-02-18 08:30:00', '2023-06-28 09:15:00'),
+
+      ('无人机-001', '正常', '航拍组',
+       '大疆M300RTK，配备热成像相机', '2023-04-05 13:20:00', '2023-07-10 10:00:00');
+
+-- 批量插入传感器数据
+INSERT INTO equipment (equipment_name, status, use_name, remark) VALUES
+     ('温度传感器-01', '正常', '监测组', '安装在东区仓库'),
+     ('温度传感器-02', '正常', '监测组', '安装在西区实验室'),
+     ('烟雾传感器-01', '正常', '监测组', '大厅主探测器'),
+     ('气体传感器-01', '正常', '监测组', '化工厂区专用'),
+     ('压力传感器-01', '维修', '技术部', '等待更换零件'),
+     ('红外传感器-01', '正常', '监测组', '周界安防系统');
+
 
 /*关键key*/
 create TABLE security_key(

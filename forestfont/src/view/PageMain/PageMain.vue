@@ -25,7 +25,7 @@
 
 
           <a-menu-item key="8">定位记录</a-menu-item>
-          <a-menu-item key="9">巡场记录</a-menu-item>
+          <router-link to="/equiment" style="color:rgba(255, 255, 255, 0.65);"><a-menu-item key="9">设备列表</a-menu-item></router-link>
           <a-menu-item key="10">火灾报警记录</a-menu-item>
 
 
@@ -49,9 +49,10 @@
         <div class="components-page-header-demo-responsive" style="border: 1px solid rgb(235, 237, 240)">
           <a-page-header title="Title" sub-title="This is a subtitle" @back="() => $router.go(-1)">
             <template #extra>
-              <a-button key="3">Operation</a-button>
               <router-link to="/screen"><a-button key="2">智慧大屏</a-button></router-link>
-              <a-button key="1" type="primary">Primary</a-button>
+              <a-button key="3">全屏</a-button>
+              <a-button key="4">主题切换</a-button>
+              <a-button key="1" type="primary">退出登录</a-button>
             </template>
           </a-page-header>
         </div>

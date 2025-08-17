@@ -183,8 +183,8 @@ export const KeyStore = defineStore('KeyStore', () => {
         };
       }
       console.log(addKeyTable.addKeyTables);
-    } catch (error) {
-      message.error('获取秘钥详情失败');
+    } catch (error:unknown) {
+      message.error('获取秘钥详情失败'+error.message);
     }
   }
 
@@ -211,11 +211,6 @@ export const KeyStore = defineStore('KeyStore', () => {
     keyName: [
       { required: true, message: '请输入秘钥名称' },
       { max: 50, message: '秘钥名称不能超过50个字符' }
-    ],
-    keyPassword: [
-      { required: true, message: '请输入秘钥' },
-      { pattern: /^[a-zA-Z0-9]+$/, message: '秘钥只能包含字母和数字' },
-      { min: 8, message: '秘钥长度不能少于8位' }
     ],
     keyCreateName: [
       { required: true, message: '请输入创建者名称' },
@@ -252,6 +247,14 @@ export const KeyStore = defineStore('KeyStore', () => {
     })
   }
 
+  // 高德天气api
+  const WDapi = ref<string>();
+  const WDapiSelect =() =>{
+    keySelectById(3).then((res) =>{
+      WDapi.value =  res.data?.data.keyPassword
+    })
+  }
+
 
 
   return {
@@ -279,6 +282,8 @@ export const KeyStore = defineStore('KeyStore', () => {
     onFinish,
     rules,
     GDApiSelect,
-    GDApi
+    GDApi,
+    WDapiSelect,
+    WDapi
   }
 })

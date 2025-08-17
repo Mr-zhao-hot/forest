@@ -68,6 +68,11 @@ const router = createRouter({
           path:"/key",
           name:"key",
           component:() => import('@/view/key/index.vue'),
+        },
+        {
+          path:"/equiment",
+          name:"equiment",
+          component:() => import('@/view/equiment/index.vue'),
         }
 
       ],
@@ -75,12 +80,12 @@ const router = createRouter({
     {
       path: '/srcean',
       name: 'screan',
-      component: () => import('@/view/Screen/Screan.vue'),
+      component: () => import('@/view/Screen/index.vue'),
     },
     {
       path:"/screen",
       name:"screan",
-      component:() => import("@/view/Screen/Screan.vue")
+      component:() => import("@/view/Screen/index.vue")
     }
   ],
 })

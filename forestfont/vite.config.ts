@@ -23,13 +23,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      // '&': fileURLToPath(new URL('./pubilc', import.meta.url)),
+      '&': fileURLToPath(new URL('./public', import.meta.url)),
     },
   },
   css: {
     preprocessorOptions: {
       scss: {
-        // additionalData: `@use "@/assets/scss/_variables.scss" as vars;`,
+        additionalData: `@use "@/assets/utils.scss" as *;`,
       },
       less: {
         javascriptEnabled: true,
@@ -44,7 +44,7 @@ export default defineConfig({
   //   open: true,            // 自动打开浏览器
   //   proxy: {               // API代理配置
   //     '/api': {
-  //       target: 'http://192.168.251.53:8080',  // 后端API地址
+  //       target: 'http://172.16.202.185:8080',  // 后端API地址
   //       changeOrigin: true,               // 允许跨域
   //       rewrite: (path) => path.replace(/^\/api/, ''),
   //       secure: false,                    // 如果是https需要设为true
