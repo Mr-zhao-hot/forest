@@ -10,43 +10,43 @@
           <span>首页</span>
         </a-menu-item>
 
-          <router-link to="/tree" style="color:rgba(255, 255, 255, 0.65);">
-            <a-menu-item key="3">
-              树种管理
-            </a-menu-item>
-          </router-link>
+        <router-link to="/tree" style="color: rgba(255, 255, 255, 0.65)">
+          <a-menu-item key="3"> 树种管理 </a-menu-item>
+        </router-link>
 
+        <a-menu-item key="4">区域管理</a-menu-item>
 
-          <a-menu-item key="4">区域管理</a-menu-item>
-
-        <router-link to="/map" style="color:rgba(255, 255, 255, 0.65);">
+        <router-link to="/map" style="color: rgba(255, 255, 255, 0.65)">
           <a-menu-item key="6">实时定位</a-menu-item>
         </router-link>
 
+        <a-menu-item key="8">定位记录</a-menu-item>
+        <router-link to="/equipment" style="color: rgba(255, 255, 255, 0.65)"
+          ><a-menu-item key="9">设备列表</a-menu-item></router-link
+        >
+        <router-link to="/fire" style="color: rgba(255, 255, 255, 0.65)"
+          ><a-menu-item key="10">火灾报警记录</a-menu-item></router-link
+        >
 
-          <a-menu-item key="8">定位记录</a-menu-item>
-          <router-link to="/equipment" style="color:rgba(255, 255, 255, 0.65);"><a-menu-item key="9">设备列表</a-menu-item></router-link>
-          <a-menu-item key="10">火灾报警记录</a-menu-item>
-
-
-
-        <router-link to="/Ai" style="color:rgba(255, 255, 255, 0.65)">
+        <router-link to="/Ai" style="color: rgba(255, 255, 255, 0.65)">
           <a-menu-item key="11">
-          <span>智能小创Ai助手</span>
-        </a-menu-item>
+            <span>智能小创Ai助手</span>
+          </a-menu-item>
         </router-link>
 
-        <router-link to="/key" style="color:rgba(255, 255, 255, 0.65)">
+        <router-link to="/key" style="color: rgba(255, 255, 255, 0.65)">
           <a-menu-item key="12">
             <span>秘钥管理</span>
           </a-menu-item>
         </router-link>
-
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">
-      <a-layout-header :style="{ background: '#fff', padding: 0 }" >
-        <div class="components-page-header-demo-responsive" style="border: 1px solid rgb(235, 237, 240)">
+      <a-layout-header :style="{ background: '#fff', padding: 0 }">
+        <div
+          class="components-page-header-demo-responsive"
+          style="border: 1px solid rgb(235, 237, 240)"
+        >
           <a-page-header title="Title" sub-title="This is a subtitle" @back="() => $router.go(-1)">
             <template #extra>
               <router-link to="/screen"><a-button key="2">智慧大屏</a-button></router-link>
@@ -58,10 +58,8 @@
         </div>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
-        <div :style="{  background: '#fff' }">
-
-            <router-view ></router-view>
-
+        <div :style="{ background: '#fff' }">
+          <router-view></router-view>
         </div>
       </a-layout-content>
     </a-layout>
@@ -91,7 +89,6 @@ const selectedKeys = ref<string[]>(['4'])
   display: inline-block;
   border: none;
   margin-left: 20px;
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 }
-
 </style>

@@ -4,14 +4,14 @@ interface TableRecord {
 }
 
 import { nextTick, onMounted, ref, watch } from 'vue'
-import Tip from "@/components/tip/Tip.vue";
+import Tip from '@/components/tip/Tip.vue'
 import { equipmentStore } from '@/stores/EquipmentStore.ts'
 const equipmentstore = equipmentStore()
 // 表单初始化
-onMounted(()=>{
-  equipmentstore.EquipmentSelectList();
+onMounted(() => {
+  equipmentstore.EquipmentSelectList()
 })
-const formRef = ref();
+const formRef = ref()
 
 // 清楚规则校验
 watch(
@@ -19,11 +19,11 @@ watch(
   (open) => {
     if (open) {
       nextTick(() => {
-        formRef.value?.clearValidate();
-      });
+        formRef.value?.clearValidate()
+      })
     }
-  }
-);
+  },
+)
 </script>
 
 <template>
@@ -53,28 +53,37 @@ watch(
       <a-col class="gutter-row" :span="5">
         <div style="display: flex; align-items: center; gap: 8px">
           <span style="white-space: nowrap">使用人:</span>
-          <a-input style="flex: 2" v-model:value="equipmentstore.equipmentTablePage.useName" placeholder="请输入使用人" />
+          <a-input
+            style="flex: 2"
+            v-model:value="equipmentstore.equipmentTablePage.useName"
+            placeholder="请输入使用人"
+          />
         </div>
       </a-col>
     </a-row>
 
     <!-- 操作按钮 -->
     <a-space class="action-buttons">
-      <a-button type="primary" style="background-color: #1890ff" @click="equipmentstore.EquipmentAddButton"
-      ><plus-outlined />新增</a-button
+      <a-button
+        type="primary"
+        style="background-color: #1890ff"
+        @click="equipmentstore.EquipmentAddButton"
+        ><plus-outlined />新增</a-button
       >
-      <a-button style="background-color: #52c41a; color: white" @click="equipmentstore.EquipmentSelectList"
-      ><search-outlined />查询</a-button
+      <a-button
+        style="background-color: #52c41a; color: white"
+        @click="equipmentstore.EquipmentSelectList"
+        ><search-outlined />查询</a-button
       >
 
       <a-button
         style="background-color: #ff4d4d; color: white"
         @click="equipmentstore.triggerBatchDelete"
         :disabled="equipmentstore.selectedRowKeys.length === 0"
-      ><delete-outlined /> 批量删除 ({{ equipmentstore.selectedRowKeys.length }})
+        ><delete-outlined /> 批量删除 ({{ equipmentstore.selectedRowKeys.length }})
       </a-button>
       <a-button style="border-color: #d9d9d9" @click="equipmentstore.cleanTable"
-      ><reload-outlined />重置</a-button
+        ><reload-outlined />重置</a-button
       >
     </a-space>
 
@@ -111,8 +120,6 @@ watch(
     "
     @confirm="equipmentstore.executeDelete"
   />
-
-
 
   <!--    修改 和 新增  -->
   <a-modal
@@ -174,9 +181,10 @@ watch(
         </a-col>
       </a-row>
 
-
       <a-form-item style="float: right">
-        <a-button type="dashed" style="margin-right: 10px" @click="equipmentstore.treeCancelButton">取消</a-button>
+        <a-button type="dashed" style="margin-right: 10px" @click="equipmentstore.treeCancelButton"
+          >取消</a-button
+        >
         <a-button type="primary" html-type="submit">提交</a-button>
       </a-form-item>
     </a-form>

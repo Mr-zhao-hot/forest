@@ -10,16 +10,14 @@ import {
   forestManagerdeletesTree,
   forestManagerpageSelectTree,
 } from '@/api/TreeSpecise.ts'
-import {message} from "ant-design-vue";
-
+import { message } from 'ant-design-vue'
 
 export const treeStore = defineStore('treeStore', () => {
-
   // 表单数据
   interface treeTable {
-    open: boolean;
-    title: string;
-    treeTable:{
+    open: boolean
+    title: string
+    treeTable: {
       id?: number | undefined
       attachmentName: string
       scientificName: string
@@ -33,10 +31,10 @@ export const treeStore = defineStore('treeStore', () => {
     }
   }
 
-  const treeTable =reactive<treeTable>({
+  const treeTable = reactive<treeTable>({
     open: false,
     title: '',
-    treeTable:{
+    treeTable: {
       attachmentName: '',
       scientificName: '',
       family: undefined,
@@ -44,12 +42,10 @@ export const treeStore = defineStore('treeStore', () => {
       height: undefined,
       diameter: undefined,
       lifespan: undefined,
-      growthEnvironment: "",
-      uses:"",
-    }
+      growthEnvironment: '',
+      uses: '',
+    },
   })
-
-
 
   // 分页查询
   interface treeTablesPage {
@@ -63,8 +59,8 @@ export const treeStore = defineStore('treeStore', () => {
   const treeTablesPage = reactive<treeTablesPage>({
     attachmentName: '',
     scientificName: '',
-    family: "",
-    protectionLevel: "",
+    family: '',
+    protectionLevel: '',
   })
 
   // 分页配置
@@ -84,27 +80,27 @@ export const treeStore = defineStore('treeStore', () => {
   const currentDeleteId = ref<number | null>() // 当前删除ID
   const selectedRowKeys = ref<(string | number)[]>([]) // 多选ID
 
-
   // 查询按钮
-  const treeSelectList = async () =>{
+  const treeSelectList = async () => {
     forestManagerpageSelectTree({
       pageSize: pagination.pageSize,
       pageNumber: pagination.current,
-      ...treeTablesPage
+      ...treeTablesPage,
     }).then((res) => {
       data.value = Array.isArray(res.data?.data.list)
         ? res.data.data.list.map((item: any, index: number) => ({
-          ...item,
-          key: item.classId || index
-        })) : [];
-      pagination.total = res.data?.total || 0;
-    });
+            ...item,
+            key: item.classId || index,
+          }))
+        : []
+      pagination.total = res.data?.total || 0
+    })
   }
 
   // 新增按钮
   const treeAddButton = () => {
-    treeTable.open = true;
-    treeTable.title = "新增班级";
+    treeTable.open = true
+    treeTable.title = '新增班级'
     Object.assign(treeTable.treeTable, {
       attachmentName: '',
       scientificName: '',
@@ -113,12 +109,10 @@ export const treeStore = defineStore('treeStore', () => {
       height: undefined,
       diameter: undefined,
       lifespan: undefined,
-      growthEnvironment: "",
-      uses:""
-    });
+      growthEnvironment: '',
+      uses: '',
+    })
   }
-
-
 
   // 重置
   const cleanTable = () => {
@@ -127,14 +121,14 @@ export const treeStore = defineStore('treeStore', () => {
       scientificName: '',
       family: undefined,
       protectionLevel: undefined,
-    });
-    treeSelectList();
+    })
+    treeSelectList()
   }
 
   // 触发删除
   const triggerDelete = (record: treeTablesPage) => {
     deleteMode.value = 'single'
-    currentDeleteId.value = record.id;
+    currentDeleteId.value = record.id
     tipVisible.value = true
   }
 
@@ -142,30 +136,29 @@ export const treeStore = defineStore('treeStore', () => {
   const executeDelete = async () => {
     try {
       if (deleteMode.value === 'single') {
-        await forestManagerDeleteTree(currentDeleteId.value!);
-        message.success('删除成功');
+        await forestManagerDeleteTree(currentDeleteId.value!)
+        message.success('删除成功')
       } else {
-        await forestManagerdeletesTree(selectedRowKeys.value);
-        message.success(`已删除 ${selectedRowKeys.value.length} 项`);
+        await forestManagerdeletesTree(selectedRowKeys.value)
+        message.success(`已删除 ${selectedRowKeys.value.length} 项`)
       }
-      await treeSelectList();
-      selectedRowKeys.value = [];
+      await treeSelectList()
+      selectedRowKeys.value = []
     } catch (error) {
-      message.error('删除失败');
+      message.error('删除失败')
     } finally {
-      tipVisible.value = false;
+      tipVisible.value = false
     }
   }
-
 
   // 批量删除
   const triggerBatchDelete = () => {
     if (selectedRowKeys.value.length === 0) {
-      message.warning('请至少选择一项');
-      return;
+      message.warning('请至少选择一项')
+      return
     }
-    deleteMode.value = 'batch';
-    tipVisible.value = true;
+    deleteMode.value = 'batch'
+    tipVisible.value = true
   }
 
   // 多选变化
@@ -184,55 +177,50 @@ export const treeStore = defineStore('treeStore', () => {
   const onFinish = () => {
     if (treeTable.title == '新增班级') {
       treeAdd(treeTable.treeTable).then(() => {
-        message.success("新增成功");
-        treeTable.open = false;
-        treeSelectList();
-      });
-    } else if (treeTable.title == '修改班级') {
-      treeUpdate(
-          treeTable.treeTable.id!,
-          treeTable.treeTable
-      ).then(() => {
-        message.success("修改成功");
-        treeTable.open = false;
-        treeSelectList();
-      });
-    }
-  };
-
-  // 查询单个树种
-  const forestManagerSelectByIds = (id:number) =>{
-      return forestManagerSelectById(id).then((res) => {
-        treeTable.treeTable ={
-         id:res.data?.data.id,
-         attachmentName: res.data?.data.attachmentName,
-         scientificName:res.data?.data.scientificName,
-         family:res.data?.data.family,
-         protectionLevel:res.data?.data.protectionLevel,
-         height: res.data.data?.height,
-         diameter:res.data.data?.diameter,
-         lifespan:res.data.data?.lifespan,
-         growthEnvironment:res.data.data?.growthEnvironment,
-         uses:res.data.data?.uses,
-        }
-        console.log(treeTable.treeTable)
+        message.success('新增成功')
+        treeTable.open = false
+        treeSelectList()
       })
-
+    } else if (treeTable.title == '修改班级') {
+      treeUpdate(treeTable.treeTable.id!, treeTable.treeTable).then(() => {
+        message.success('修改成功')
+        treeTable.open = false
+        treeSelectList()
+      })
+    }
   }
 
+  // 查询单个树种
+  const forestManagerSelectByIds = (id: number) => {
+    return forestManagerSelectById(id).then((res) => {
+      treeTable.treeTable = {
+        id: res.data?.data.id,
+        attachmentName: res.data?.data.attachmentName,
+        scientificName: res.data?.data.scientificName,
+        family: res.data?.data.family,
+        protectionLevel: res.data?.data.protectionLevel,
+        height: res.data.data?.height,
+        diameter: res.data.data?.diameter,
+        lifespan: res.data.data?.lifespan,
+        growthEnvironment: res.data.data?.growthEnvironment,
+        uses: res.data.data?.uses,
+      }
+      console.log(treeTable.treeTable)
+    })
+  }
 
   // 打开编辑弹窗
   const editItem = async (record: treeTablesPage) => {
-    treeTable.title = "修改班级";
+    treeTable.title = '修改班级'
     if (record.id != null) {
-      await forestManagerSelectByIds(record.id);
+      await forestManagerSelectByIds(record.id)
     }
-    treeTable.open = true;
+    treeTable.open = true
   }
 
   const treeCancelButton = () => {
-    treeTable.open = false;
-  };
+    treeTable.open = false
+  }
 
   // 表格数据
   const data = ref<treeTable[]>([])
@@ -254,29 +242,23 @@ export const treeStore = defineStore('treeStore', () => {
   const rules = {
     attachmentName: [
       { required: true, message: '请输入树种名称' },
-      { max: 50, message: '名称不能超过50个字符' }
+      { max: 50, message: '名称不能超过50个字符' },
     ],
-    scientificName: [
-      { required: true, message: '请输入学名' }
-    ],
-    family: [
-      { required: true, message: '请输入所属科' }
-    ],
-    protectionLevel: [
-      { required: true, message: '请输入保护等级' }
-    ],
+    scientificName: [{ required: true, message: '请输入学名' }],
+    family: [{ required: true, message: '请输入所属科' }],
+    protectionLevel: [{ required: true, message: '请输入保护等级' }],
     height: [
       { type: 'number', message: '高度必须为数字' },
-      { required: true, message: '请输入高度' }
+      { required: true, message: '请输入高度' },
     ],
     diameter: [
       { type: 'number', message: '直径必须为数字' },
-      { required: true, message: '请输入直径' }
+      { required: true, message: '请输入直径' },
     ],
     lifespan: [
       { type: 'number', message: '寿命必须为数字' },
-      { required: true, message: '请输入寿命' }
-    ]
+      { required: true, message: '请输入寿命' },
+    ],
   }
 
   return {
@@ -300,6 +282,6 @@ export const treeStore = defineStore('treeStore', () => {
     treeTable,
     onFinish,
     treeCancelButton,
-    rules
+    rules,
   }
 })

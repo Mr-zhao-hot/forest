@@ -3,14 +3,14 @@ import { KeyStore } from '@/stores/KeyStore.ts'
 import { nextTick, onMounted, ref, watch } from 'vue'
 const key = KeyStore()
 interface TableRecord {
-  id:  number | unknown
+  id: number | unknown
 }
-import Tip from "@/components/tip/Tip.vue";
+import Tip from '@/components/tip/Tip.vue'
 // 表单初始化
-onMounted(()=>{
-  key.KeySelectList();
+onMounted(() => {
+  key.KeySelectList()
 })
-const formRef = ref();
+const formRef = ref()
 
 // 清楚规则校验
 watch(
@@ -18,65 +18,65 @@ watch(
   (open) => {
     if (open) {
       nextTick(() => {
-        formRef.value?.clearValidate();
-      });
+        formRef.value?.clearValidate()
+      })
     }
-  }
-);
+  },
+)
 </script>
 
 <template>
   <a-card>
-  <a-row :gutter="[16, 24]" class="search-area">
-    <a-col class="gutter-row" :span="5">
-      <div style="display: flex; align-items: center; gap: 8px">
-        <span style="white-space: nowrap">秘钥名称：</span>
-        <a-input
-          style="flex: 2"
-          v-model:value="key.keyTable.keyName"
-          placeholder="请输入秘钥名"
-        />
-      </div>
-    </a-col>
-    <a-col class="gutter-row" :span="5">
-      <div style="display: flex; align-items: center; gap: 8px">
-        <span style="white-space: nowrap">秘钥：</span>
-        <a-input
-          style="flex: 2"
-          v-model:value="key.keyTable.keyPassword"
-          placeholder="请输入秘钥"
-        />
-      </div>
-     </a-col>
-    <a-col class="gutter-row" :span="5">
-      <div style="display: flex; align-items: center; gap: 8px">
-        <span style="white-space: nowrap">创建者：</span>
-        <a-input
-          style="flex: 2"
-          v-model:value="key.keyTable.keyCreateName"
-          placeholder="请输入创建者"
-        />
-      </div>
-    </a-col>
+    <a-row :gutter="[16, 24]" class="search-area">
+      <a-col class="gutter-row" :span="5">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <span style="white-space: nowrap">秘钥名称：</span>
+          <a-input
+            style="flex: 2"
+            v-model:value="key.keyTable.keyName"
+            placeholder="请输入秘钥名"
+          />
+        </div>
+      </a-col>
+      <a-col class="gutter-row" :span="5">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <span style="white-space: nowrap">秘钥：</span>
+          <a-input
+            style="flex: 2"
+            v-model:value="key.keyTable.keyPassword"
+            placeholder="请输入秘钥"
+          />
+        </div>
+      </a-col>
+      <a-col class="gutter-row" :span="5">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <span style="white-space: nowrap">创建者：</span>
+          <a-input
+            style="flex: 2"
+            v-model:value="key.keyTable.keyCreateName"
+            placeholder="请输入创建者"
+          />
+        </div>
+      </a-col>
     </a-row>
 
     <!-- 操作按钮 -->
     <a-space class="action-buttons">
       <a-button type="primary" style="background-color: #1890ff" @click="key.treeAddButton"
-      ><plus-outlined />新增</a-button
+        ><plus-outlined />新增</a-button
       >
       <a-button style="background-color: #52c41a; color: white" @click="key.KeySelectList"
-      ><search-outlined />查询</a-button
+        ><search-outlined />查询</a-button
       >
 
       <a-button
         style="background-color: #ff4d4d; color: white"
         @click="key.triggerBatchDelete"
         :disabled="key.selectedRowKeys.length === 0"
-      ><delete-outlined /> 批量删除 ({{ key.selectedRowKeys.length }})
+        ><delete-outlined /> 批量删除 ({{ key.selectedRowKeys.length }})
       </a-button>
       <a-button style="border-color: #d9d9d9" @click="key.cleanTable"
-      ><reload-outlined />重置</a-button
+        ><reload-outlined />重置</a-button
       >
     </a-space>
 
@@ -145,7 +145,7 @@ watch(
         </a-col>
       </a-row>
 
-      <a-form-item style="float: right; ">
+      <a-form-item style="float: right">
         <a-button type="dashed" style="margin-right: 10px" @click="key.CancelButton">取消</a-button>
         <a-button type="primary" html-type="submit">提交</a-button>
       </a-form-item>

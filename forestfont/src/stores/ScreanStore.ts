@@ -1,46 +1,47 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-
-export const ScreanStore = defineStore('ScreanStore', () => {
-  const columns = [
-    {
-      title: 'Name',  // Changed from 'name' to 'title' to match Ant Design table column definition
-      dataIndex: 'name',
-      key: 'name',
-      width: "30%",
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
+import { reactive } from 'vue'
+import { getScreen } from '@/api/FireApi.ts'
+export const ScreenStore = defineStore('ScreenStore', () => {
+    // 获取数据大屏数据
+    interface Screen {
+      smokeAvg:bigint | undefined,
+      smokeMin:bigint  | undefined,
+      smokeMax:bigint  | undefined,
+      taskSuccessNum:number  | undefined,
+      taskFailNum:number  | undefined,
     }
-  ];
 
-  const data = [
-    {
-      key: '1',
-      name: '消防车1',
-      tags: ['待出发'],
-    },
-    {
-      key: '2',
-      name: '救援车',
-      tags: ['待出发'],
-    },
-    {
-      key: '3',
-      name: '消防车2',
-      tags: ['待出发'],
-    },
-  ];
+
+ // 获取数据大屏数据
+    const ScreenTable = reactive<Screen>({
+      smokeAvg: undefined,
+      smokeMax: undefined,
+      smokeMin: undefined,
+      taskFailNum: undefined,
+      taskSuccessNum: undefined,
+    });
+
+// 获取数据大屏数据
+  const getScreenNum = async () => {
+    const res = await getScreen(); // 假设 Screen() 返回 Promise
+    ScreenTable.smokeAvg = res.data.data.smokeAvg;
+    ScreenTable.smokeMin = res.data.data.smokeMin;
+    ScreenTable.smokeMax = res.data.data.smokeMax;
+    ScreenTable.taskFailNum = res.data.data.taskFailNum;
+    ScreenTable.taskSuccessNum = res.data.data.taskSuccessNum;
+    console.log(ScreenTable)
+  };
+
+  const columns = []
+
+  const data = []
+
+
 
   return {
     columns,
-    data
+    data,
+    getScreenNum,
+    ScreenTable
   }
 })

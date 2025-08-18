@@ -8,41 +8,41 @@ import {
   equipmentSelectById,
 } from '@/api/EquipmentApi.ts'
 import { message } from 'ant-design-vue'
-import {ref,reactive} from 'vue'
+import { ref, reactive } from 'vue'
 export const equipmentStore = defineStore('equipmentStore', () => {
   // 表单数据(删除 新增 批量删 新增)
   interface equipmentInterface {
-    open: boolean;
-    title: string;
-    equipmentTable:{
+    open: boolean
+    title: string
+    equipmentTable: {
       id?: number | undefined
-      equipmentName: string,
-      status:string,
-      useName:string,
-      remark:string
+      equipmentName: string
+      status: string
+      useName: string
+      remark: string
     }
   }
 
-  const equipmentTable =reactive<equipmentInterface>({
+  const equipmentTable = reactive<equipmentInterface>({
     open: false,
     title: '',
-    equipmentTable:{
+    equipmentTable: {
       equipmentName: '',
       status: '',
       useName: '',
-      remark: ''
-    }
+      remark: '',
+    },
   })
 
   // 分页查询
   interface equipmentTablePageInterface {
     id?: number | undefined
-    equipmentName: string,
-    status:string,
-    useName:string,
-    remark:string,
-    createTime:string,
-    updateTime:string,
+    equipmentName: string
+    status: string
+    useName: string
+    remark: string
+    createTime: string
+    updateTime: string
   }
   const equipmentTablePage = reactive<equipmentTablePageInterface>({
     equipmentName: '',
@@ -52,8 +52,6 @@ export const equipmentStore = defineStore('equipmentStore', () => {
     createTime: '',
     updateTime: '',
   })
-
-
 
   // 分页配置
   const pagination = reactive({
@@ -74,36 +72,36 @@ export const equipmentStore = defineStore('equipmentStore', () => {
   // 触发删除
   const triggerDelete = (record: equipmentTablePageInterface) => {
     deleteMode.value = 'single'
-    currentDeleteId.value = record.id;
+    currentDeleteId.value = record.id
     tipVisible.value = true
   }
 
   // 查询按钮
-  const EquipmentSelectList = async () =>{
+  const EquipmentSelectList = async () => {
     selectPageList({
       pageSize: pagination.pageSize,
       pageNumber: pagination.current,
-      ...equipmentTablePage
+      ...equipmentTablePage,
     }).then((res) => {
       data.value = Array.isArray(res.data?.data.list)
         ? res.data.data.list.map((item: any, index: number) => ({
-          ...item,
-          key: item.classId || index
-        })) : [];
-      pagination.total = res.data?.total || 0;
-    });
+            ...item,
+            key: item.classId || index,
+          }))
+        : []
+      pagination.total = res.data?.total || 0
+    })
   }
 
   // 批量删除
   const triggerBatchDelete = () => {
     if (selectedRowKeys.value.length === 0) {
-      message.warning('请至少选择一项');
-      return;
+      message.warning('请至少选择一项')
+      return
     }
-    deleteMode.value = 'batch';
-    tipVisible.value = true;
+    deleteMode.value = 'batch'
+    tipVisible.value = true
   }
-
 
   // 多选变化
   const onSelectChange = (keys: (string | number)[]) => {
@@ -131,8 +129,8 @@ export const equipmentStore = defineStore('equipmentStore', () => {
 
   // 新增按钮
   const EquipmentAddButton = () => {
-    equipmentTable.open = true;
-    equipmentTable.title = "新增班级";
+    equipmentTable.open = true
+    equipmentTable.title = '新增班级'
     Object.assign(equipmentTable.equipmentTable, {
       equipmentName: '',
       status: '',
@@ -140,7 +138,7 @@ export const equipmentStore = defineStore('equipmentStore', () => {
       remark: '',
       createTime: '',
       updateTime: '',
-    });
+    })
   }
 
   // 重置
@@ -150,26 +148,26 @@ export const equipmentStore = defineStore('equipmentStore', () => {
       status: '',
       useName: '',
       remark: '',
-    });
-    EquipmentSelectList();
+    })
+    EquipmentSelectList()
   }
 
-// 执行删除
+  // 执行删除
   const executeDelete = async () => {
     try {
       if (deleteMode.value === 'single') {
-        await equipmentDelete(currentDeleteId.value!);
-        message.success('删除成功');
+        await equipmentDelete(currentDeleteId.value!)
+        message.success('删除成功')
       } else {
-        await equipmentDeletes(selectedRowKeys.value);
-        message.success(`已删除 ${selectedRowKeys.value.length} 项`);
+        await equipmentDeletes(selectedRowKeys.value)
+        message.success(`已删除 ${selectedRowKeys.value.length} 项`)
       }
-      await EquipmentSelectList();
-      selectedRowKeys.value = [];
+      await EquipmentSelectList()
+      selectedRowKeys.value = []
     } catch (error) {
-      message.error('删除失败');
+      message.error('删除失败')
     } finally {
-      tipVisible.value = false;
+      tipVisible.value = false
     }
   }
 
@@ -177,30 +175,27 @@ export const equipmentStore = defineStore('equipmentStore', () => {
   const onFinish = () => {
     if (equipmentTable.title == '新增班级') {
       equipmentAdd(equipmentTable.equipmentTable).then(() => {
-        message.success("新增成功");
-        equipmentTable.open = false;
-        EquipmentSelectList();
-      });
+        message.success('新增成功')
+        equipmentTable.open = false
+        EquipmentSelectList()
+      })
     } else if (equipmentTable.title == '修改班级') {
-      equipmentUpdate(
-        equipmentTable.equipmentTable.id!,
-        equipmentTable.equipmentTable
-      ).then(() => {
-        message.success("修改成功");
-        equipmentTable.open = false;
-        EquipmentSelectList();
-      });
+      equipmentUpdate(equipmentTable.equipmentTable.id!, equipmentTable.equipmentTable).then(() => {
+        message.success('修改成功')
+        equipmentTable.open = false
+        EquipmentSelectList()
+      })
     }
-  };
+  }
   // 查询单个树种
-  const EquipmentManagerSelectByIds = (id:number) =>{
+  const EquipmentManagerSelectByIds = (id: number) => {
     return equipmentSelectById(id).then((res) => {
-      equipmentTable.equipmentTable ={
-        id:res.data?.data.id,
-        equipmentName:res.data?.data?.equipmentName,
-        status:res.data?.data?.status,
-        useName:res.data?.data?.useName,
-        remark:res.data?.data?.remark,
+      equipmentTable.equipmentTable = {
+        id: res.data?.data.id,
+        equipmentName: res.data?.data?.equipmentName,
+        status: res.data?.data?.status,
+        useName: res.data?.data?.useName,
+        remark: res.data?.data?.remark,
       }
       console.log(equipmentTable.equipmentTable)
     })
@@ -208,33 +203,29 @@ export const equipmentStore = defineStore('equipmentStore', () => {
 
   // 打开编辑弹窗
   const editItem = async (record: equipmentTablePageInterface) => {
-    equipmentTable.title = "修改班级";
+    equipmentTable.title = '修改班级'
     if (record.id != null) {
-      await EquipmentManagerSelectByIds(record.id);
+      await EquipmentManagerSelectByIds(record.id)
     }
-    equipmentTable.open = true;
+    equipmentTable.open = true
   }
 
   const treeCancelButton = () => {
-    equipmentTable.open = false;
-  };
+    equipmentTable.open = false
+  }
 
   const rules = {
     equipmentName: [
       { required: true, message: '设备名称不能为空', trigger: 'blur' },
-      { max: 50, message: '设备名称不能超过50个字符', trigger: 'blur' }
+      { max: 50, message: '设备名称不能超过50个字符', trigger: 'blur' },
     ],
-    status: [
-      { required: true, message: '请选择设备状态', trigger: 'change' }
-    ],
+    status: [{ required: true, message: '请选择设备状态', trigger: 'change' }],
     useName: [
       { required: true, message: '使用人不能为空', trigger: 'blur' },
-      { max: 20, message: '使用人不能超过20个字符', trigger: 'blur' }
+      { max: 20, message: '使用人不能超过20个字符', trigger: 'blur' },
     ],
-    remark: [
-      { max: 200, message: '备注不能超过200个字符', trigger: 'blur' }
-    ]
-  };
+    remark: [{ max: 200, message: '备注不能超过200个字符', trigger: 'blur' }],
+  }
 
   return {
     equipmentTable,
@@ -258,6 +249,6 @@ export const equipmentStore = defineStore('equipmentStore', () => {
     data,
     pagination,
     EquipmentSelectList,
-    equipmentTablePage
+    equipmentTablePage,
   }
 })

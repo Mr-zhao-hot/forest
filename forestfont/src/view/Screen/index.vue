@@ -10,11 +10,15 @@ import shebei from '@/assets/img/shebei.png'
 import header from '@/assets/img/header.png'
 import chineseMap from '@/assets/img/chineseMap.png'
 
-import {Weather} from '@/stores/Weather.ts'
-const wd = Weather();
+import { Weather } from '@/stores/Weather.ts'
+const wd = Weather()
 
-import {KeyStore} from "@/stores/KeyStore.ts"
+import { KeyStore } from '@/stores/KeyStore.ts'
 const Wd = KeyStore()
+
+import { ScreenStore } from '@/stores/ScreanStore.ts'
+const Sc = ScreenStore()
+
 const isLoaded = ref(false)
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -29,9 +33,7 @@ import VChart from 'vue-echarts'
 
 const scale = 0.7 // 缩放系数
 
-import { ScreanStore } from '@/stores/ScreanStore.ts'
 
-const Screan = ScreanStore()
 // 温度检测
 const option1 = ref({
   series: [
@@ -99,16 +101,16 @@ const option1 = ref({
       },
       data: [
         {
-          value: 20,
+          value: `${wd.cityTable.temperature || `待加载`}`,
         },
       ],
     },
     {
       type: 'gauge',
       center: ['50%', '75%'],
-      radius: '80%',
+      radius: '70%',
       startAngle: 200,
-      endAngle: -20,
+      endAngle: -30,
       min: 0,
       max: 60,
       itemStyle: {
@@ -138,7 +140,7 @@ const option1 = ref({
       },
       data: [
         {
-          value: 30,
+          value: `${wd.cityTable.temperature }`,
         },
       ],
     },
@@ -151,13 +153,13 @@ const option = ref({
       type: 'gauge',
       startAngle: 180,
       endAngle: 0,
-      center: ['50%', '80%'],
+      center: ['50%', '82%'],
       radius: '140%',
       min: 0,
-      max: 1,
+      max: 100,
       axisLine: {
         lineStyle: {
-          width: 6,
+          width: 10,
           color: [
             [0.25, '#7CFFB2'], // 绿
             [0.5, '#58D9F9'], // 蓝
@@ -180,7 +182,7 @@ const option = ref({
       },
       data: [
         {
-          value: 0.1, // 70%
+          value: `${Sc.ScreenTable.smokeAvg}`, // 70%
         },
       ],
     },
@@ -381,19 +383,14 @@ use([
   BarChart,
 ])
 
-
-setInterval(()=>{
-  wd.weather(210111,`${Wd.WDapi}`)
-},36000)
-
+setInterval(() => {
+  wd.weather(210111, `${Wd.WDapi}`)
+}, 36000)
 
 onMounted(() => {
-    Wd.WDapiSelect()
-    console.log(Wd.WDapi); // 这里可以正确获取
-
-
-
-
+  Wd.WDapiSelect()
+  console.log(Wd.WDapi) // 这里可以正确获取
+  Sc.getScreenNum()
   // 页面加载后触发动画
   setTimeout(() => {
     isLoaded.value = true
@@ -410,17 +407,32 @@ onMounted(() => {
       <div class="top-box-bq top-box" style="animation-delay: 0.2s">
         <img src="@/assets/img/yemian.png" alt="标签" />
       </div>
-      <div class="top-box-time top-box" style="animation-delay: 0.4s; ">
-        <div class="top-box-time top-box" style="animation-delay: 0.4s; background: #f5fffa ; padding: 12px 16px; border-radius: 4px; font-family: 'Helvetica Neue', Arial, sans-serif;">
-          <div style="display: flex; gap: 20px; color: #228b22;">
-            <span>日期: <strong>{{ wd.cityTable.reporttime }}</strong></span>
-            <span>天气: <strong>{{ wd.cityTable.weather}}</strong></span>
-            <span>温度: <strong>{{ wd.cityTable.temperature}} ℃</strong></span>
-            <span>湿度: <strong>{{ wd.cityTable.humidity }}%</strong></span>
+      <div class="top-box-time top-box" style="animation-delay: 0.4s">
+        <div
+          class="top-box-time top-box"
+          style="
+            animation-delay: 0.4s;
+            background: #f5fffa;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+          "
+        >
+          <div style="display: flex; gap: 20px; color: #228b22">
+            <span
+              >日期: <strong>{{ wd.cityTable.reporttime }}</strong></span
+            >
+            <span
+              >天气: <strong>{{ wd.cityTable.weather }}</strong></span
+            >
+            <span
+              >温度: <strong>{{ wd.cityTable.temperature }} ℃</strong></span
+            >
+            <span
+              >湿度: <strong>{{ wd.cityTable.humidity }}%</strong></span
+            >
           </div>
         </div>
-
-
       </div>
     </div>
 
@@ -445,7 +457,9 @@ onMounted(() => {
                 justify-content: center;
               "
             >
-              <div style="font-size: 24px; font-weight: bold; color: #1890ff">当日气温%</div>
+              <div class="stat-item">
+                平均温度<span class="stat-value">{{wd.cityTable.temperature || '待加载'}}</span>%
+              </div>
             </div>
           </div>
         </div>
@@ -465,8 +479,8 @@ onMounted(() => {
         >
           <div class="inner_box inner-animate" style="animation-delay: 0.6s">
             <a-table
-              :columns="Screan.columns"
-              :data-source="Screan.data"
+              :columns="Sc.columns"
+              :data-source="Sc.data"
               :pagination="false"
               :scrollToFirstRowOnChange="true"
               bordered
@@ -516,25 +530,23 @@ onMounted(() => {
       <!-- 右侧三个盒子 -->
       <div class="right-section">
         <div class="chart-box chart-box-animate" :style="{ backgroundImage: `url(${yanwuImg})` }">
-          <div class="inner_box inner-animate">
+          <div class="inner_box inner-animate" >
             <!-- 仪表板ECharts图 (70%) -->
             <div style="flex: 7; min-width: 0">
               <v-chart :option="option" autoresize style="width: 100%; height: 100%" />
             </div>
 
             <!-- 文字显示 (30%) -->
-            <div
-              style="
-                flex: 3;
-                padding-left: 10px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-              "
-            >
-              <div style="font-size: 24px; font-weight: bold; color: #1890ff">最高浓度:%</div>
-              <div style="font-size: 24px; font-weight: bold; color: #1890ff">平均浓度%</div>
-              <div style="font-size: 24px; font-weight: bold; color: #1890ff">最低浓度:%</div>
+            <div class="stats-container">
+              <div class="stat-item">
+                最高浓度<span class="stat-value">{{Sc.ScreenTable.smokeMax}}</span>%
+              </div>
+              <div class="stat-item">
+                平均浓度<span class="stat-value">{{Sc.ScreenTable.smokeAvg}}</span>%
+              </div>
+              <div class="stat-item">
+                最低浓度<span class="stat-value">{{Sc.ScreenTable.smokeMin}}</span>%
+              </div>
             </div>
           </div>
         </div>
@@ -552,33 +564,38 @@ onMounted(() => {
           :style="{ backgroundImage: `url(${status})` }"
           style="animation-delay: 0.4s"
         >
-
-
-          <div class="inner_box inner-animate" style="animation-delay: 0.6s; display: flex; flex-direction: column; margin-left: 40px; gap: 15px">
+          <div
+            class="inner_box inner-animate"
+            style="
+              animation-delay: 0.6s;
+              display: flex;
+              flex-direction: column;
+              margin-left: 40px;
+              gap: 15px;
+            "
+          >
             <!-- 成功修复卡片 -->
             <div class="status-card success-card">
               <div class="card-icon">
-                <img src="@/assets/img/success.png" class="card-img">
+                <img src="@/assets/img/success.png" class="card-img" />
               </div>
               <div class="card-content">
-                <h3>完成修复 <span class="highlight-number">12</span> 个</h3>
-                <p>所有问题已成功解决</p>
+                <h3>完成修复 <span class="highlight-number">{{Sc.ScreenTable.taskSuccessNum || `暂无数据`}}</span> 个</h3>
+<!--                <p>所有问题已成功解决</p>-->
               </div>
             </div>
 
             <!-- 待修复卡片 -->
             <div class="status-card warning-card">
               <div class="card-icon">
-                <img src="@/assets/img/fix.png" class="card-img">
+                <img src="@/assets/img/fix.png" class="card-img" />
               </div>
               <div class="card-content">
-                <h3>待修复 <span class="highlight-number">5</span> 个</h3>
+                <h3>待修复 <span class="highlight-number">{{Sc.ScreenTable.taskFailNum || `暂无数据`}}</span> 个</h3>
                 <p>有待解决的问题</p>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -823,7 +840,7 @@ onMounted(() => {
 
 .status-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .success-card {
@@ -845,7 +862,7 @@ onMounted(() => {
 
 .card-img {
   width: 50px; /* Adjusted size for reduced height */
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .success-card .card-img {
@@ -891,5 +908,28 @@ onMounted(() => {
 
 .warning-card p {
   color: #ff8f00;
+}
+.stats-container {
+  flex: 5;
+  padding-left: 10px;
+  display: flex;
+  padding-top: 3px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-item {
+    //border: 1px red solid;
+  padding-top: 10px;
+  font-size: vh(20);
+  font-weight: 600;
+  color: #52c41a;
+  text-shadow: 0 2px 4px rgba(0,100,0,0.1);
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  color: #faad14;
+  margin: 0 2px;
 }
 </style>

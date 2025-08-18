@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { treeStore } from '@/stores/TreeStore.ts'
 import { nextTick, onMounted, ref, watch } from 'vue'
-import Tip from "@/components/tip/Tip.vue";
+import Tip from '@/components/tip/Tip.vue'
 const tree = treeStore()
 interface TableRecord {
   id: string | number
 }
 
-const formRef = ref();
+const formRef = ref()
 
 // 清楚规则校验
 watch(
@@ -15,14 +15,14 @@ watch(
   (open) => {
     if (open) {
       nextTick(() => {
-        formRef.value?.clearValidate();
-      });
+        formRef.value?.clearValidate()
+      })
     }
-  }
-);
+  },
+)
 // 表单初始化
-onMounted(()=>{
-  tree.treeSelectList();
+onMounted(() => {
+  tree.treeSelectList()
 })
 </script>
 <template>
@@ -52,13 +52,21 @@ onMounted(()=>{
       <a-col class="gutter-row" :span="5">
         <div style="display: flex; align-items: center; gap: 8px">
           <span style="white-space: nowrap">所属科：</span>
-          <a-input style="flex: 2" v-model:value="tree.treeTablesPage.family" placeholder="请输入年级" />
+          <a-input
+            style="flex: 2"
+            v-model:value="tree.treeTablesPage.family"
+            placeholder="请输入年级"
+          />
         </div>
       </a-col>
       <a-col class="gutter-row" :span="5">
         <div style="display: flex; align-items: center; gap: 8px">
           <span style="white-space: nowrap">保护级别：</span>
-          <a-input style="flex: 2" v-model:value="tree.treeTablesPage.protectionLevel" placeholder="请输入年级" />
+          <a-input
+            style="flex: 2"
+            v-model:value="tree.treeTablesPage.protectionLevel"
+            placeholder="请输入年级"
+          />
         </div>
       </a-col>
     </a-row>
@@ -117,8 +125,6 @@ onMounted(()=>{
     @confirm="tree.executeDelete"
   />
 
-
-
   <!--    修改 和 新增  -->
   <a-modal
     v-model:open="tree.treeTable.open"
@@ -159,10 +165,7 @@ onMounted(()=>{
         <!-- 所属科 -->
         <a-col :span="12">
           <a-form-item label="所属科" name="family">
-            <a-input
-              v-model:value="tree.treeTable.treeTable.family"
-              placeholder="请输入所属科"
-            />
+            <a-input v-model:value="tree.treeTable.treeTable.family" placeholder="请输入所属科" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -240,22 +243,19 @@ onMounted(()=>{
       <a-row :gutter="24">
         <a-col :span="24">
           <a-form-item label="用途" name="uses">
-            <a-input
-              v-model:value="tree.treeTable.treeTable.uses"
-              placeholder="请输入用途"
-            />
+            <a-input v-model:value="tree.treeTable.treeTable.uses" placeholder="请输入用途" />
           </a-form-item>
         </a-col>
       </a-row>
 
       <a-form-item style="float: right">
-        <a-button type="dashed" style="margin-right: 10px" @click="tree.treeCancelButton">取消</a-button>
+        <a-button type="dashed" style="margin-right: 10px" @click="tree.treeCancelButton"
+          >取消</a-button
+        >
         <a-button type="primary" html-type="submit">提交</a-button>
       </a-form-item>
     </a-form>
   </a-modal>
-
-
 </template>
 
 <style scoped>

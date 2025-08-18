@@ -22,7 +22,7 @@ const checkOnlineStatus = async () => {
   try {
     const response = await fetch('https://webapi.amap.com/maps?v=2.0&key=dummy', {
       method: 'HEAD',
-      cache: 'no-cache'
+      cache: 'no-cache',
     })
     return response.ok
   } catch (e) {
@@ -45,8 +45,8 @@ const initMap = async () => {
         // 离线配置
         enable: true,
         cacheSize: 200, // 缓存大小(MB)
-        cachePath: 'amap-offline-cache' // 缓存路径
-      }
+        cachePath: 'amap-offline-cache', // 缓存路径
+      },
     })
 
     // 创建地图实例
@@ -60,7 +60,7 @@ const initMap = async () => {
       viewMode: '3D', // 开启3D视图
       zooms: [2, 20],
       center: [116.333926, 39.997245],
-      mapStyle: 'amap://styles/satellite' // 设置为卫星地图
+      mapStyle: 'amap://styles/satellite', // 设置为卫星地图
     })
 
     // 添加控件
@@ -74,7 +74,6 @@ const initMap = async () => {
 
     // 添加默认标记点
     addDefaultMarker()
-
   } catch (error) {
     console.error('高德地图加载失败:', error)
     // 尝试从缓存加载
@@ -96,7 +95,7 @@ const initOfflineManager = () => {
   const offlineManager = new AMapInstance.value.OfflineManager({
     map: map.value,
     autoDownload: true, // 自动下载离线地图
-    city: '北京' // 默认城市
+    city: '北京', // 默认城市
   })
 
   // 监听离线地图下载进度
@@ -116,7 +115,7 @@ const addDefaultMarker = () => {
 
   const marker = new AMapInstance.value.Marker({
     position: map.value.getCenter(),
-    title: '中心点'
+    title: '中心点',
   })
 
   map.value.add(marker)
@@ -124,7 +123,7 @@ const addDefaultMarker = () => {
   // 添加点击事件
   marker.on('click', () => {
     const infoWindow = new AMapInstance.value.InfoWindow({
-      content: '<div style="padding:5px;">这是地图中心点</div>'
+      content: '<div style="padding:5px;">这是地图中心点</div>',
     })
     infoWindow.open(map.value, marker.getPosition())
   })
@@ -134,7 +133,7 @@ const addDefaultMarker = () => {
 onMounted(() => {
   window.scrollTo(0, document.body.scrollHeight)
   initMap()
-  keys.GDApiSelect();
+  keys.GDApiSelect()
 })
 
 // 组件卸载时销毁地图

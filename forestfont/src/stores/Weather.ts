@@ -17,12 +17,12 @@ export const Weather = defineStore('Weather', () => {
   }
 
   const cityTable = ref<city>({
-    city:"",
-    province:"",
-    reporttime:"",
-    temperature:undefined,
-    weather:"",
-    humidity:undefined
+    city: '',
+    province: '',
+    reporttime: '',
+    temperature: undefined,
+    weather: '',
+    humidity: undefined,
   })
   // cityTable.value.city = res.data?.lives.city
   // cityTable.value.temperature = res.data?.lives.temperature
@@ -31,8 +31,8 @@ export const Weather = defineStore('Weather', () => {
   // cityTable.value.weather = res.data?.weather
   // cityTable.value.province = res.data?.province
   const weather = (cityCode: number, apiKey: string) => {
-      weatherApi(cityCode, apiKey)
-      .then((res) =>{
+    weatherApi(cityCode, apiKey)
+      .then((res) => {
         cityTable.value.city = res.data?.lives[0].city
         cityTable.value.temperature = res.data?.lives[0].temperature
         cityTable.value.humidity = res.data?.lives[0].humidity
@@ -42,13 +42,12 @@ export const Weather = defineStore('Weather', () => {
       })
 
       .catch((error) => {
-        console.error(error);
-      });
-
-  };
+        console.error(error)
+      })
+  }
 
   return {
     weather,
-    cityTable
+    cityTable,
   }
 })

@@ -1,65 +1,58 @@
 <script setup lang="ts">
-import { useChatStore } from '@/stores/AiStore.ts';
-import { ref, onMounted, nextTick } from 'vue';
-import {
-  Input,
-  Avatar,
-  Typography,
-  message
-} from 'ant-design-vue';
-import { h } from 'vue';
-import { SearchOutlined } from '@ant-design/icons-vue';
-const { Text } = Typography;
-const chatStore = useChatStore();
-const messageInput = ref('');
-const messagesEndRef = ref<HTMLElement>();
+import { useChatStore } from '@/stores/AiStore.ts'
+import { ref, onMounted, nextTick } from 'vue'
+import { Input, Avatar, Typography, message } from 'ant-design-vue'
+import { h } from 'vue'
+import { SearchOutlined } from '@ant-design/icons-vue'
+const { Text } = Typography
+const chatStore = useChatStore()
+const messageInput = ref('')
+const messagesEndRef = ref<HTMLElement>()
 // 图片显示
-const ok = ref<boolean>(true);
+const ok = ref<boolean>(true)
 const handleSubmit = async () => {
-  ok.value = false;
-  const trimmedMessage = messageInput.value.trim();
+  ok.value = false
+  const trimmedMessage = messageInput.value.trim()
 
   if (!trimmedMessage) {
-    message.warning('请输入消息内容');
+    message.warning('请输入消息内容')
     if (chatStore.messages.length === 0) {
-      ok.value = true;
+      ok.value = true
     }
-    return;
+    return
   }
 
   try {
     // 先清空输入框
-    messageInput.value = "";
-    await nextTick(); // 等待DOM更新
+    messageInput.value = ''
+    await nextTick() // 等待DOM更新
 
     // 发送消息
-    await chatStore.sendMessage(trimmedMessage);
+    await chatStore.sendMessage(trimmedMessage)
 
     // 滚动到底部
-    scrollToBottom();
-
+    scrollToBottom()
   } catch (error) {
-    console.error('发送消息失败:', error);
-    message.error('发送消息失败');
+    console.error('发送消息失败:', error)
+    message.error('发送消息失败')
   }
-};
+}
 
 const scrollToBottom = () => {
   nextTick(() => {
-    messagesEndRef.value?.scrollIntoView({ behavior: 'smooth' });
-  });
-};
-
+    messagesEndRef.value?.scrollIntoView({ behavior: 'smooth' })
+  })
+}
 
 onMounted(() => {
-  scrollToBottom();
-});
+  scrollToBottom()
+})
 </script>
 
 <template>
   <!--  logo    -->
   <div class="pulsing-logo" v-if="ok">
-    <img src="@/assets/img/Ai.png" alt="AI Logo" style="width: 1000px">
+    <img src="@/assets/img/Ai.png" alt="AI Logo" style="width: 1000px" />
   </div>
 
   <div class="chat-app">
@@ -83,7 +76,7 @@ onMounted(() => {
                 :size="36"
                 :style="{
                   backgroundColor: message.role === 'user' ? '#f0f7ff' : 'white',
-                  color: message.role === 'user' ? '#1890ff' : '#52c41a'
+                  color: message.role === 'user' ? '#1890ff' : '#52c41a',
                 }"
               >
                 <template #icon>
@@ -94,7 +87,7 @@ onMounted(() => {
               <div class="content-bubble">
                 <Text class="content-text">{{ message.content }}</Text>
               </div>
-              <div class="message-time" >
+              <div class="message-time">
                 {{ new Date(message.timestamp).toLocaleTimeString() }}
               </div>
             </div>
@@ -147,7 +140,8 @@ onMounted(() => {
   width: 100%;
   background: #fff;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 .app-header {
@@ -164,7 +158,7 @@ onMounted(() => {
 }
 
 .chat-container {
-  background-color: #F3F7FD;
+  background-color: #f3f7fd;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -180,8 +174,8 @@ onMounted(() => {
   scrollbar-width: thin;
   scrollbar-color: #d9d9d9 transparent;
   background-image:
-    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 20px 20px;
   background-position: center center;
 }
@@ -213,8 +207,14 @@ onMounted(() => {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .message-content {
@@ -257,7 +257,7 @@ onMounted(() => {
 .message-time {
   font-size: 12px;
   color: rgba(0, 0, 0, 0.45);
-  margin-top:8px;
+  margin-top: 8px;
 }
 
 .typing-indicator {
@@ -293,8 +293,14 @@ onMounted(() => {
 }
 
 @keyframes typingAnimation {
-  0%, 60%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-4px); }
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
 }
 
 .input-wrapper {
@@ -318,7 +324,6 @@ onMounted(() => {
   animation: superPulse 0.8s infinite alternate;
   transform-origin: center;
 }
-
 
 /* 确保动画性能优化 */
 .pulsing-logo img {

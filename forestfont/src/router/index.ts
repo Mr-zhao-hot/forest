@@ -55,26 +55,30 @@ const router = createRouter({
           component: () => import('@/view/tree/index.vue'),
         },
         {
-          path:"/AI",
-          name:"Ai",
-          component:() => import('@/view/ai/index.vue'),
+          path: '/AI',
+          name: 'Ai',
+          component: () => import('@/view/ai/index.vue'),
         },
         {
-          path:"/map",
-          name:"map",
-          component:() => import('@/view/map/index.vue'),
+          path: '/map',
+          name: 'map',
+          component: () => import('@/view/map/index.vue'),
         },
         {
-          path:"/key",
-          name:"key",
-          component:() => import('@/view/key/index.vue'),
+          path: '/key',
+          name: 'key',
+          component: () => import('@/view/key/index.vue'),
         },
         {
-          path:"/equipment",
-          name:"equipment",
-          component:() => import('@/view/equipment/index.vue'),
-        }
-
+          path: '/equipment',
+          name: 'equipment',
+          component: () => import('@/view/equipment/index.vue'),
+        },
+        {
+          path: '/fire',
+          name: 'fire',
+          component: () => import('@/view/fire/index.vue'),
+        },
       ],
     },
     {
@@ -83,10 +87,10 @@ const router = createRouter({
       component: () => import('@/view/Screen/index.vue'),
     },
     {
-      path:"/screen",
-      name:"screan",
-      component:() => import("@/view/Screen/index.vue")
-    }
+      path: '/screen',
+      name: 'screan',
+      component: () => import('@/view/Screen/index.vue'),
+    },
   ],
 })
 

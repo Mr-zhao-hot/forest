@@ -12,7 +12,6 @@ const httpInstance = axios.create({
   },
 })
 
-
 httpInstance.interceptors.request.use(
   (config) => {
     // debugger
