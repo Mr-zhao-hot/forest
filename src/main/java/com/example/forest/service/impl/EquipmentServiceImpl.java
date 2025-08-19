@@ -2,6 +2,8 @@ package com.example.forest.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.forest.common.ServiceCode;
+import com.example.forest.excpetion.BusinessException;
 import com.example.forest.model.cache.EquipmentCache;
 import com.example.forest.model.persist.entity.Equipment;
 import com.example.forest.model.persist.entity.TreeSpecies;
@@ -42,6 +44,9 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
         }
         // 查数据库
         Equipment equipmentmapper = equipmentMapper.selectById(id);
+        if (equipmentmapper == null) {
+            throw new BusinessException(ServiceCode.FAIL_CODE,"查不到此数据");
+        }
         EquipmentVo equipmentVo = new EquipmentVo();
         BeanUtils.copyProperties(equipmentmapper, equipmentVo);
         equipmentCache.setequipmentCache(equipmentmapper);

@@ -79,6 +79,11 @@ const router = createRouter({
           name: 'fire',
           component: () => import('@/view/fire/index.vue'),
         },
+        {
+          path:"/area",
+          name:"area",
+          component:() => import("@/view/area/index.vue")
+        }
       ],
     },
     {

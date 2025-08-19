@@ -2,6 +2,8 @@ package com.example.forest.common;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -35,8 +37,11 @@ public class JsonOk<T> implements Serializable {
         return new JsonOk<>(null, ServiceCode.SUCCESS_CODE.getCode(), null);
     }
 
+
+
     // 成功响应的快捷方法
-    public static <T> JsonOk<T> success(String message) {
+    @Contract("_ -> new")
+    public static <T> @NotNull JsonOk<T> success(String message) {
         return new JsonOk<>(message, ServiceCode.SUCCESS_CODE.getCode(), null);
     }
 

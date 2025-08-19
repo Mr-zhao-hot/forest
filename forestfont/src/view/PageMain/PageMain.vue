@@ -14,13 +14,13 @@
           <a-menu-item key="3"> 树种管理 </a-menu-item>
         </router-link>
 
-        <a-menu-item key="4">区域管理</a-menu-item>
-
         <router-link to="/map" style="color: rgba(255, 255, 255, 0.65)">
           <a-menu-item key="6">实时定位</a-menu-item>
         </router-link>
 
-        <a-menu-item key="8">定位记录</a-menu-item>
+        <router-link to="/area" style="color: rgba(255, 255, 255, 0.65)"
+        ><a-menu-item key="8">定位记录</a-menu-item></router-link
+        >
         <router-link to="/equipment" style="color: rgba(255, 255, 255, 0.65)"
           ><a-menu-item key="9">设备列表</a-menu-item></router-link
         >

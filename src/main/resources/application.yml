@@ -3,6 +3,11 @@ server:
   address: 0.0.0.0
 
 spring:
+  mvc:
+    static-path-pattern: /**
+  devtools:
+    restart:
+      enabled: false
   datasource:
     url: jdbc:mysql://localhost:3306/forest?useSSL=false&serverTimezone=UTC
     username: root
@@ -10,8 +15,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
+      enabled: true
       max-file-size: 10MB
-      max-request-size: 100MB
+      max-request-size: 10MB
+      resolve-lazily: false
+      location: C:\Users\Mr_zh\Desktop\项目\林场\forest\src\main\resources\static\img
 
 
 
@@ -35,3 +43,6 @@ pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
+
+
+

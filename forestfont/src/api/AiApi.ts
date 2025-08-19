@@ -7,3 +7,11 @@ export function Ai(content: any) {
     data: content,
   })
 }
+
+export function AiFire(content: any) {
+  return CommonInstance({
+    url: '/api/chatFire',
+    method: 'POST',
+    data: content,
+  })
+}

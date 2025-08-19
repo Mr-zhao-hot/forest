@@ -284,6 +284,33 @@ CREATE TABLE fire_data (
                            update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='火灾报警记录表';
 
+INSERT INTO `fire_data` (`device_id`, `longitude`, `latitude`, `altitude`, `azimuth`, `alarm_level`, `alarm_type`, `temperature`, `smoke_density`, `image_url`, `status`, `create_name`) VALUES
+                                                                                                                                                                                             ('FD-1001', 116.404269, 39.915378, 45.20, 120.50, 2, 1, 35.60, 15.20, 'http://example.com/images/fire001.jpg', 0, 'sensor_001'),
+                                                                                                                                                                                             ('FD-1002', 116.405871, 39.916542, 46.50, 135.75, 3, 2, 78.90, 5.30, 'http://example.com/images/fire002.jpg', 1, 'sensor_002');
+CREATE TABLE AREA (
+        id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+        fire_point VARCHAR(10) comment '起火点',
+        rescue_vehicle VARCHAR(10) COMMENT '救援车',
+        Inspection_vehicle VARCHAR(10) COMMENT '巡检车',
+        fire_truck VARCHAR(10) comment '消防车',
+        wrecker VARCHAR(10) comment '清障车',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='定点记录';                                                                                                                                                                         ('FD-1003', 116.403156, 39.914723, 44.80, 90.00, 1, 3, 42.30, 2.10, 'http://example.com/images/fire003.jpg', 2, 'sensor_003'),
+('FD-1004', 116.406532, 39.917215, 47.20, 180.25, 4, 2, 125.70, 8.90, 'http://example.com/images/fire004.jpg', 0, 'sensor_004'),
+('FD-1005', 116.402348, 39.913987, 43.90, 45.50, 2, 1, 38.20, 12.60, 'http://example.com/images/fire005.jpg', 3, 'sensor_005'),
+('FD-1006', 116.407891, 39.918342, 48.50, 270.75, 5, 2, 210.50, 25.80, 'http://example.com/images/fire006.jpg', 1, 'sensor_006'),
+('FD-1007', 116.401234, 39.912876, 42.30, 315.20, 3, 3, 65.40, 3.20, 'http://example.com/images/fire007.jpg', 2, 'sensor_007'),
+('FD-1008', 116.408765, 39.919543, 49.80, 225.60, 1, 4, 28.90, 1.50, 'http://example.com/images/fire008.jpg', 0, 'sensor_008'),
+('FD-1009', 116.400567, 39.911234, 41.20, 150.30, 4, 2, 98.70, 18.40, 'http://example.com/images/fire009.jpg', 1, 'sensor_009'),
+('FD-1010', 116.409876, 39.920123, 50.50, 60.90, 2, 1, 36.80, 10.70, 'http://example.com/images/fire010.jpg', 2, 'sensor_010'),
+('FD-1011', 116.399876, 39.910345, 40.50, 195.40, 3, 3, 72.30, 4.80, 'http://example.com/images/fire011.jpg', 3, 'sensor_011'),
+('FD-1012', 116.410234, 39.921456, 51.20, 30.20, 5, 2, 240.60, 32.10, 'http://example.com/images/fire012.jpg', 0, 'sensor_012'),
+('FD-1013', 116.398765, 39.909123, 39.80, 105.70, 1, 1, 32.50, 8.30, 'http://example.com/images/fire013.jpg', 1, 'sensor_013'),
+('FD-1014', 116.411345, 39.922567, 52.00, 285.30, 4, 2, 135.20, 22.50, 'http://example.com/images/fire014.jpg', 2, 'sensor_014'),
+('FD-1015', 116.397654, 39.908234, 38.20, 75.80, 2, 4, 31.20, 0.90, 'http://example.com/images/fire015.jpg', 0, 'sensor_015');
+
+
 CREATE TABLE equipment(
                           id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
                           equipment_name varchar(50) comment '设备名称',
@@ -358,3 +385,5 @@ SELECT * FROM menu WHERE hidden = 1;
 
 -- 检查外链菜单
 SELECT * FROM menu WHERE component IS NULL AND path LIKE 'http%';
+
+select  avg(smoke_density)  , max(smoke_density) , min(smoke_density) , count(status != 2) ,count(status = 2)  from fire_data ;

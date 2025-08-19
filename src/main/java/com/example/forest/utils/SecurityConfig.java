@@ -45,7 +45,11 @@ public class SecurityConfig {
                 "/user/register",
                 "/role/selects",
                 "/swagger-ui/**",
-                "/v3/api-docs/**"
+                "/v3/api-docs/**",
+                "/fire/upload",
+                "/static/img/**",
+                "/img/**"
+
         };
 
         http
@@ -104,8 +108,9 @@ public class SecurityConfig {
         ));
 
         // 允许的 HTTP 方法
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        // Content-Type 头（文件上传必须）
+        config.addExposedHeader("Content-Type");
         // 允许的请求头
         config.setAllowedHeaders(List.of("*"));
 

@@ -2,6 +2,7 @@ package com.example.forest.mapper;
 
 import com.example.forest.model.persist.entity.FireData;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.forest.model.persist.vo.screen.Screen;
 
 /**
 * @author Mr_zh
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface FireDataMapper extends BaseMapper<FireData> {
 
+    Screen dataSelect();
 }
 
 

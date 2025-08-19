@@ -2,6 +2,7 @@ package com.example.forest.model.persist.vo.fire;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class FireData implements Serializable {
+public class FireDataVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -40,7 +41,7 @@ public class FireData implements Serializable {
     private BigDecimal latitude;
 
     /**
-     * 海拔高度(米)
+         * 海拔高度(米)
      */
     private BigDecimal altitude;
 
@@ -87,10 +88,12 @@ public class FireData implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 }

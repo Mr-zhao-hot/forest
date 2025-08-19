@@ -14,6 +14,8 @@ public class EquipmentParam implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+
+
     /**
      * 设备名称
      */

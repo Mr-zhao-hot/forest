@@ -25,8 +25,7 @@ const handleSubmit = async () => {
   try {
     // 先清空输入框
     messageInput.value = ''
-    await nextTick() // 等待DOM更新
-
+    await nextTick()
     // 发送消息
     await chatStore.sendMessage(trimmedMessage)
 
@@ -47,13 +46,18 @@ const scrollToBottom = () => {
 onMounted(() => {
   scrollToBottom()
 })
+
+
 </script>
 
 <template>
   <!--  logo    -->
-  <div class="pulsing-logo" v-if="ok">
-    <img src="@/assets/img/Ai.png" alt="AI Logo" style="width: 1000px" />
-  </div>
+<!--  <div class="pulsing-logo" v-if="ok">-->
+<!--    <a-image ref="image" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" alt="AI Logo"  />-->
+<!--  </div>-->
+<!--  <div class="pulsing-logo1" v-else>-->
+<!--    <a-image ref="image" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" alt="AI Logo"  />-->
+<!--  </div>-->
 
   <div class="chat-app">
     <!-- 标题栏 -->
@@ -85,7 +89,14 @@ onMounted(() => {
                 </template>
               </Avatar>
               <div class="content-bubble">
+
                 <Text class="content-text">{{ message.content }}</Text>
+                <a-image
+                  v-if="message.imageUrl"
+                  :src="message.imageUrl"
+                  alt="AI 生成的图片"
+                  style="max-width: 300px; margin-top: 10px;"
+                />
               </div>
               <div class="message-time">
                 {{ new Date(message.timestamp).toLocaleTimeString() }}
@@ -107,6 +118,18 @@ onMounted(() => {
 
       <!-- 输入区域 - 现在固定在底部 -->
       <div class="input-wrapper">
+        <a-select
+          v-model:value="chatStore.value"
+          show-search
+          placeholder="请选择模式"
+          style="width: 200px"
+          :options="chatStore.options"
+          :filter-option="chatStore.filterOption"
+          @focus="chatStore.handleFocus"
+          @blur="chatStore.handleBlur"
+          @change="chatStore.handleChange"
+          size="large"
+        ></a-select>
         <Input
           v-model:value="messageInput"
           placeholder="输入消息..."
@@ -227,7 +250,6 @@ onMounted(() => {
 }
 
 .content-bubble {
-  max-width: 75%;
   padding: 12px 16px;
   border-radius: 12px;
   position: relative;
@@ -318,12 +340,24 @@ onMounted(() => {
 }
 .pulsing-logo {
   position: absolute;
+  width: 200px;
   top: 450px;
   left: 450px;
   z-index: 9999;
   animation: superPulse 0.8s infinite alternate;
   transform-origin: center;
 }
+
+.pulsing-logo1 {
+  position: absolute;
+  width: 200px;
+  top: 450px;
+  left: 500px;
+  z-index: 9999;
+  animation: superPulse 0.8s infinite alternate;
+  transform-origin: center;
+}
+
 
 /* 确保动画性能优化 */
 .pulsing-logo img {

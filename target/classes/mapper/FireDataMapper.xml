@@ -27,4 +27,13 @@
         alarm_level,alarm_type,temperature,smoke_density,image_url,
         status,create_name,create_time,update_time
     </sql>
+    <select id="dataSelect" resultType="com.example.forest.model.persist.vo.screen.Screen">
+        SELECT
+            AVG(smoke_density) AS smokeAvg,
+            MAX(smoke_density) AS smokeMax,
+            MIN(smoke_density) AS smokeMin,
+            COUNT(CASE WHEN status = 2 THEN 1 END) AS taskSuccessNum,
+            COUNT(CASE WHEN status != 2 THEN 1 END) AS taskFailNum
+        FROM fire_data
+    </select>
 </mapper>

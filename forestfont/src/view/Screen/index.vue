@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// 导入部分保持不变
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import yanwuImg from '@/assets/img/yanwu.png'
 import baojing from '@/assets/img/baojing.png'
 import fire from '@/assets/img/fire.png'
@@ -11,15 +10,8 @@ import header from '@/assets/img/header.png'
 import chineseMap from '@/assets/img/chineseMap.png'
 
 import { Weather } from '@/stores/Weather.ts'
-const wd = Weather()
-
 import { KeyStore } from '@/stores/KeyStore.ts'
-const Wd = KeyStore()
-
 import { ScreenStore } from '@/stores/ScreanStore.ts'
-const Sc = ScreenStore()
-
-const isLoaded = ref(false)
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { BarChart, GaugeChart, LineChart, PieChart } from 'echarts/charts'
@@ -31,121 +23,30 @@ import {
 } from 'echarts/components'
 import VChart from 'vue-echarts'
 
+// 初始化stores
+const wd = Weather()
+const Wd = KeyStore()
+const Sc = ScreenStore()
+
+const isLoaded = ref(false)
 const scale = 0.7 // 缩放系数
 
 
-// 温度检测
-const option1 = ref({
-  series: [
-    {
-      type: 'gauge',
-      center: ['50%', '75%'],
-      radius: '98%', // 调整半径
-      startAngle: 200,
-      endAngle: -10,
-      min: 0,
-      max: 60,
-      splitNumber: 12,
-      itemStyle: {
-        color: '#FFAB91',
-      },
-      progress: {
-        show: true,
-        width: 30 * scale,
-      },
-      pointer: {
-        show: false,
-      },
-      axisLine: {
-        lineStyle: {
-          width: 30 * scale,
-        },
-      },
-      axisTick: {
-        distance: -45 * scale,
-        splitNumber: 5,
-        lineStyle: {
-          width: 2,
-          color: '#999',
-        },
-      },
-      splitLine: {
-        distance: -52 * scale,
-        length: 14 * scale,
-        lineStyle: {
-          width: 3,
-          color: '#999',
-        },
-      },
-      axisLabel: {
-        distance: -20 * scale,
-        color: '#999',
-        fontSize: 16 * scale,
-      },
-      anchor: {
-        show: false,
-      },
-      title: {
-        show: false,
-      },
-      detail: {
-        valueAnimation: true,
-        width: '60%',
-        lineHeight: 30 * scale,
-        borderRadius: 7,
-        offsetCenter: [0, '-15%'],
-        fontSize: 40 * scale,
-        fontWeight: 'bolder',
-        formatter: '{value} °C',
-        color: 'inherit',
-      },
-      data: [
-        {
-          value: `${wd.cityTable.temperature || `待加载`}`,
-        },
-      ],
-    },
-    {
-      type: 'gauge',
-      center: ['50%', '75%'],
-      radius: '70%',
-      startAngle: 200,
-      endAngle: -30,
-      min: 0,
-      max: 60,
-      itemStyle: {
-        color: '#FD7347',
-      },
-      progress: {
-        show: true,
-        width: 8 * scale,
-      },
-      pointer: {
-        show: false,
-      },
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-      splitLine: {
-        show: false,
-      },
-      axisLabel: {
-        show: false,
-      },
-      detail: {
-        show: false,
-      },
-      data: [
-        {
-          value: `${wd.cityTable.temperature }`,
-        },
-      ],
-    },
-  ],
-})
+// 注册必要的ECharts组件
+use([
+  CanvasRenderer,
+  GaugeChart,
+  LineChart,
+  PieChart,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  TitleComponent,
+  BarChart,
+])
+
+
+
 // 浓度仪表盘
 const option = ref({
   series: [
@@ -161,10 +62,10 @@ const option = ref({
         lineStyle: {
           width: 10,
           color: [
-            [0.25, '#7CFFB2'], // 绿
-            [0.5, '#58D9F9'], // 蓝
-            [0.75, '#FDDD60'], // 黄
-            [1, '#FF6E76'], // 红
+            [0.25, '#7CFFB2'],
+            [0.5, '#58D9F9'],
+            [0.75, '#FDDD60'],
+            [1, '#FF6E76'],
           ],
         },
       },
@@ -182,20 +83,21 @@ const option = ref({
       },
       data: [
         {
-          value: `${Sc.ScreenTable.smokeAvg}`, // 70%
+          value: 11,
         },
       ],
     },
   ],
 })
+
 // 报警类型分布
 const chartOption = ref({
   grid: {
-    top: '20%', // 上边距（可以是像素值如 80 或百分比）
-    right: '10%', // 右边距
-    bottom: '15%', // 下边距
-    left: '18%', // 左边距（如果 legend 在左侧，需要留更多空间）
-    containLabel: true, // 确保坐标轴标签在 grid 区域内
+    top: '20%',
+    right: '10%',
+    bottom: '15%',
+    left: '18%',
+    containLabel: true,
   },
   title: {
     left: 'center',
@@ -297,6 +199,7 @@ const chartOption = ref({
     },
   ],
 })
+
 // 火灾报警统计
 const optione = ref({
   title: {
@@ -347,12 +250,12 @@ const optione = ref({
       barWidth: '60%',
       data: [0, 1, 0, 0, 0, 0, 0],
       itemStyle: {
-        color: '#31a354', // 基础绿色
+        color: '#31a354',
         borderRadius: [4, 4, 0, 0],
       },
       emphasis: {
         itemStyle: {
-          color: '#006d2c', // 深绿色高亮
+          color: '#006d2c',
         },
       },
       label: {
@@ -369,33 +272,147 @@ const optione = ref({
     containLabel: true,
   },
 })
+// 温度检测
+const option1 = ref({
+  series: [
+    {
+      type: 'gauge',
+      center: ['50%', '75%'],
+      radius: '98%',
+      startAngle: 200,
+      endAngle: -10,
+      min: 0,
+      max: 60,
+      splitNumber: 12,
+      itemStyle: {
+        color: '#FFAB91',
+      },
+      progress: {
+        show: true,
+        width: 30 * scale,
+      },
+      pointer: {
+        show: false,
+      },
+      axisLine: {
+        lineStyle: {
+          width: 30 * scale,
+        },
+      },
+      axisTick: {
+        distance: -45 * scale,
+        splitNumber: 5,
+        lineStyle: {
+          width: 2,
+          color: '#999',
+        },
+      },
+      splitLine: {
+        distance: -52 * scale,
+        length: 14 * scale,
+        lineStyle: {
+          width: 3,
+          color: '#999',
+        },
+      },
+      axisLabel: {
+        distance: -20 * scale,
+        color: '#999',
+        fontSize: 16 * scale,
+      },
+      anchor: {
+        show: false,
+      },
+      title: {
+        show: false,
+      },
+      detail: {
+        valueAnimation: true,
+        width: '60%',
+        lineHeight: 30 * scale,
+        borderRadius: 7,
+        offsetCenter: [0, '-15%'],
+        fontSize: 40 * scale,
+        fontWeight: 'bolder',
+        formatter: '{value} °C',
+        color: 'inherit',
+      },
+      data: [
+        {
+          value: `30`,
+        },
+      ],
+    },
+    {
+      type: 'gauge',
+      center: ['50%', '75%'],
+      radius: '70%',
+      startAngle: 200,
+      endAngle: -30,
+      min: 0,
+      max: 60,
+      itemStyle: {
+        color: '#FD7347',
+      },
+      progress: {
+        show: true,
+        width: 8 * scale,
+      },
+      pointer: {
+        show: false,
+      },
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+      },
+      axisLabel: {
+        show: false,
+      },
+      detail: {
+        show: false,
+      },
+      data: [
+        {
+          value: `30`,
+        },
+      ],
+    },
+  ],
+})
+onMounted(async () => {
+  try {
+    // 1. 首先获取API配置
+    await Wd.WDapiSelect()
+    console.log('API配置:', Wd.WDapi)
 
-// 注册必要的ECharts组件
-use([
-  CanvasRenderer,
-  GaugeChart,
-  LineChart,
-  PieChart,
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-  TitleComponent,
-  BarChart,
-])
+    // 2. 获取屏幕和设备数据
+    await Promise.all([
+      Sc.getScreenNum(),
+      Sc.EquipmentSelectList()
+    ])
 
-setInterval(() => {
-  wd.weather(210111, `${Wd.WDapi}`)
-}, 36000)
 
-onMounted(() => {
-  Wd.WDapiSelect()
-  console.log(Wd.WDapi) // 这里可以正确获取
-  Sc.getScreenNum()
-  // 页面加载后触发动画
-  setTimeout(() => {
-    isLoaded.value = true
-  }, 100)
-  console.log(wd.cityTable)
+    // 3. 页面加载动画
+
+      isLoaded.value = true
+
+    // 4. 最后获取天气数据
+    await wd.weather(210111, `${Wd.WDapi}`)
+    console.log('天气数据:', wd.cityTable)
+
+    // 5. 设置定时器，每36秒刷新天气数据
+
+    await wd.weather(210111, `${Wd.WDapi}`)
+
+
+  } catch (error) {
+    console.error('初始化错误:', error)
+  }
 })
 </script>
 
@@ -488,33 +505,6 @@ onMounted(() => {
               :scroll="{ y: 300 }"
               style="width: 100%; font-size: 20px"
             >
-              <template #headerCell="{ column }">
-                <template v-if="column.key === 'name'">
-                  <span>
-                    <smile-outlined />
-                    Name
-                  </span>
-                </template>
-              </template>
-
-              <template #bodyCell="{ column, record }">
-                <template v-if="column.key === 'name'">
-                  <a>
-                    {{ record.name }}
-                  </a>
-                </template>
-                <template v-else-if="column.key === 'tags'">
-                  <span>
-                    <a-tag
-                      v-for="tag in record.tags"
-                      :key="tag"
-                      :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
-                    >
-                      {{ tag.toUpperCase() }}
-                    </a-tag>
-                  </span>
-                </template>
-              </template>
             </a-table>
           </div>
         </div>
@@ -731,17 +721,14 @@ onMounted(() => {
         width: auto; /* 或设置具体宽度，避免图片变形 */
         max-width: vw(10000); /* 确保图片不会超出视口 */
         max-height: vh(2000); /* 确保图片不会超出视口高度 */
-        //animation: breath 5s ease-in-out infinite;
+        animation: float 6s ease-in-out infinite;
 
-        @keyframes breath {
-          0%,
-          100% {
-            transform: scale(0.95);
-            opacity: 0.9;
+        @keyframes float {
+          0%, 100% {
+            transform: translate(-50%, -50%);
           }
           50% {
-            transform: scale(1.05);
-            opacity: 1;
+            transform: translate(-50%, -44%);
           }
         }
       }
