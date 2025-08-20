@@ -5,10 +5,10 @@
     >
       <div class="logo">智慧林业系统</div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item key="1">
+        <router-link to="/page" style="color: rgba(255, 255, 255, 0.65)"> <a-menu-item key="1">
           <pie-chart-outlined />
           <span>首页</span>
-        </a-menu-item>
+        </a-menu-item></router-link>
 
         <router-link to="/tree" style="color: rgba(255, 255, 255, 0.65)">
           <a-menu-item key="3"> 树种管理 </a-menu-item>

@@ -71,7 +71,7 @@ export const StudentPageStore = defineStore('StudentPageStore', () => {
         if (res.data.code == 200000) {
           // 存入token
           localStorage.setItem('accessToken', res.data.data.token)
-          router.push('/pageMain')
+          router.push('/page')
           message.success(`欢迎登录: ${res.data.data.username}，${res.data.message}`)
         } else {
           // 错误消息

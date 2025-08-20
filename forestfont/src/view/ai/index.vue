@@ -27,7 +27,7 @@ const handleSubmit = async () => {
     messageInput.value = ''
     await nextTick()
     // 发送消息
-    await chatStore.sendMessage(trimmedMessage)
+    await chatStore.handleAiResponse(trimmedMessage)
 
     // 滚动到底部
     scrollToBottom()

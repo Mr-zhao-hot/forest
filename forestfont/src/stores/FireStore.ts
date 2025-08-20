@@ -144,11 +144,9 @@ export const useFireStore = defineStore('useFireStore', () => {
   const processImageUrl = (url: string) => {
     if (!url) return '';
     if (url.startsWith('http')) return url;
-
     const baseUrl = import.meta.env.DEV
       ? 'http://127.0.0.1:8080'
       : import.meta.env.VITE_API_BASE_URL;
-
     return `${baseUrl}/${url.replace(/^static\//, '')}`;
   };
 

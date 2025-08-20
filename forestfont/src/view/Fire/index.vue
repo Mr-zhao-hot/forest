@@ -3,6 +3,7 @@ import { useFireStore } from '@/stores/FireStore.ts'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import Tip from '@/components/tip/Tip.vue'
 const fire = useFireStore()
+
 interface TableRecord {
   id: number | unknown
 }
@@ -10,6 +11,7 @@ const formRef = ref()
 onMounted(() => {
   fire.FireSelectList()
 })
+
 // 清楚规则校验
 watch(
   () => fire.fireTable.open,

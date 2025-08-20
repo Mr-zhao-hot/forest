@@ -1,9 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS
 import requests
-# import serial
-# import serial.tools.list_ports
-# import time
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -26,78 +24,59 @@ FIRE_ASSISTANT_PROMPT = """
 - 对复杂操作分步骤说明
 - 涉及安全问题时必须强调警示
 - 保持积极热情的语调
-
-示例回答风格：
-"关于消防车路线规划的问题，小创建议..."
-"这个问题涉及人员定位，需要注意..."
 """
-
-FIRE_ROUTE_PROMPT = """
-你叫小创，是专业的消防路线规划AI。用户所有问题都应按以下方式响应：
-1. 首先确认收到路线规划请求
-2. 然后模拟计算过程（3-5秒）
-3. 最后提供优化后的路线方案
-
-注意：所有响应必须包含"正在计算"字样
-"""
-
-
-def call_ollama(prompt, user_message):
-    """调用Ollama API的通用函数"""
-    try:
-        response = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": MODEL,
-                "messages": [
-                    {"role": "system", "content": prompt},
-                    {"role": "user", "content": user_message}
-                ],
-                "stream": False
-            },
-            timeout=30  # 添加超时设置
-        )
-        response.raise_for_status()
-        return response.json().get("message", {}).get("content", "")
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Ollama API调用失败: {str(e)}")
 
 
 @app.route('/api/chat', methods=['POST'])
 def general_chat():
-    """通用消防助手对话接口"""
+    """通用消防助手对话接口 - 流式版本"""
     user_message = request.json.get("content", "")
     if not user_message:
         return jsonify({"error": "必须提供content参数"}), 400
 
-    try:
-        ai_response = call_ollama(FIRE_ASSISTANT_PROMPT, user_message)
-        return jsonify({"response": ai_response})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    def generate():
+        try:
+            # 调用Ollama API，启用流式传输
+            response = requests.post(
+                OLLAMA_URL,
+                json={
+                    "model": MODEL,
+                    "messages": [
+                        {"role": "system", "content": FIRE_ASSISTANT_PROMPT},
+                        {"role": "user", "content": user_message}
+                    ],
+                    "stream": True  # 启用流式传输
+                },
+                stream=True,
+                timeout=30
+            )
+            response.raise_for_status()
 
+            # 逐块处理流式响应
+            for line in response.iter_lines():
+                if line:
+                    decoded_line = line.decode('utf-8')
+                    if decoded_line.strip():
+                        try:
+                            data = json.loads(decoded_line)
+                            if 'message' in data and 'content' in data['message']:
+                                content = data['message']['content']
+                                # 发送SSE格式的数据
+                                yield f"data: {json.dumps({'content': content})}\n\n"
+                        except json.JSONDecodeError:
+                            continue
 
-@app.route('/api/chatFire', methods=['POST'])
-def fire_route_chat():
-    """专用消防路线规划接口"""
-    user_message = request.json.get("content", "")
-    if not user_message:
-        return jsonify({"error": "必须提供content参数"}), 400
+            # 发送完成信号
+            yield "data: [DONE]\n\n"
 
-    try:
-        ai_response = call_ollama(FIRE_ROUTE_PROMPT, user_message)
-        return jsonify({"response": ai_response})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        except requests.exceptions.RequestException as e:
+            error_msg = f"Ollama API调用失败: {str(e)}"
+            yield f"data: {json.dumps({'error': error_msg})}\n\n"
+        except Exception as e:
+            error_msg = f"处理请求时出错: {str(e)}"
+            yield f"data: {json.dumps({'error': error_msg})}\n\n"
 
-
-# 硬编码常量（根据你的实际协议修改）
-FRAME_LEN = 17  # 假设数据帧长度
-FRAME_HEAD = 0x55  # 假设帧头字节
-
-# @app.route('/uart', methods=['GET'])
-# def uart():
-
+    return Response(stream_with_context(generate()), mimetype='text/event-stream')
 
 
 if __name__ == '__main__':

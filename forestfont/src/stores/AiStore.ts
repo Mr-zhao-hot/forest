@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { Ai, AiFire } from '@/api/AiApi' // 导入封装好的Ai函数
+import { Ai} from '@/api/AiApi' // 导入封装好的Ai函数
 import type { SelectProps } from 'ant-design-vue';
 import { add } from '@/api/AreaApi.ts'
 interface Message {
   role: 'user' | 'assistant'
-  content: string
+  content?: string
   imageUrl?: string;
   timestamp: number
 }
@@ -59,7 +59,6 @@ export const useChatStore = defineStore('chat', () => {
         setTimeout(() => {
           messages.value.push({
             role: 'assistant',
-            content: '正在计算路线中',
             imageUrl: selectedImageUrl, // 使用当前选择的图片
             timestamp: Date.now(),
           });
