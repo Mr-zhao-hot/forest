@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { Ai} from '@/api/AiApi' // 导入封装好的Ai函数
-import type { SelectProps } from 'ant-design-vue';
+import { nextTick, ref } from 'vue'
+import { Ai , AiFire , AiControllerCar} from '@/api/AiApi' // 导入封装好的Ai函数
+import type { SelectProps  } from 'ant-design-vue';
 import { add } from '@/api/AreaApi.ts'
 interface Message {
   role: 'user' | 'assistant'
@@ -20,8 +20,49 @@ export const useChatStore = defineStore('chat', () => {
   ]);
 
   // 在组件外部定义状态变量（避免被重复初始化）
-  let currentImageIndex = 0;
-  let currentParamIndex = 0;
+  // let currentImageIndex = 0;
+  // let currentParamIndex = 0;
+  // const handleChange = async (content: string) => {
+  //   console.log(`selected ${value}`);
+  //   if (value.value === "模拟火灾") {
+  //     isLoading.value = true;
+  //     error.value = null;
+  //
+  //     // 添加用户消息
+  //     messages.value.push({
+  //       role: 'user',
+  //       content: "前方发生火灾请帮我开始接受云端数据进行计算路线",
+  //       timestamp: Date.now(),
+  //     });
+  //
+  //     try {
+  //       // // 参数组
+  //       const Param = [{ firePoint: 'A1', rescueVehicle: 'B2' ,inspectionVehicle:'C1',fireTruck:'D1',wrecker:'T1'},]
+  //       // 定义两张图片的URL
+  //       const imageUrls = ['https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', // 第一张图片];
+  //       // 调用图片接口
+  //       const response = await Ai({ content })
+  //       add(Param[0]);
+  //       let responseContent = response.data?.response || ''
+  //       responseContent = responseContent.replace(/<think>[\s\S]*?<\/think>/, '').trim()
+  //     messages.value.push({
+  //       role: 'assistant',
+  //       content:responseContent ,
+  //       imageUrl: imageUrls[0], // 使用当前选择的图片
+  //       timestamp: Date.now(),
+  //     });
+  //         nextTick(() =>{
+  //           AiControllerCar(1)
+  //         })
+  //     } catch (err) {
+  //       error.value = err instanceof Error ? err.message : '未知的错误';
+  //     } finally {
+  //       isLoading.value = false;
+  //     }
+
+  //   }
+  // };
+  // todo 第三路线
   const handleChange = async (content: string) => {
     console.log(`selected ${value}`);
     if (value.value === "模拟火灾") {
@@ -31,7 +72,7 @@ export const useChatStore = defineStore('chat', () => {
       // 添加用户消息
       messages.value.push({
         role: 'user',
-        content: "开始规划路线",
+        content: "前方发生火灾请帮我开始接受云端数据进行计算路线",
         timestamp: Date.now(),
       });
 
@@ -46,24 +87,29 @@ export const useChatStore = defineStore('chat', () => {
           'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', // 第一张图片
           'https://example.com/fire2.jpg', // 第二张图片
         ];
-
-        // 选择当前图片（交替切换）
-        const selectedImageUrl = imageUrls[currentImageIndex];
-        // 更新索引（下次执行时显示另一张）
-        currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
-        // 选择当前参数组
-        const selectedParams = Param[currentParamIndex];
-        // 更新索引（下次调用时使用另一组）
-        currentParamIndex = (currentParamIndex + 1) % Param.length;
-        add(selectedParams);
-        setTimeout(() => {
+        // 调用图片接口
+        const response = await AiFire({ content })
+        let responseContent = response.data?.response || ''
+        responseContent = responseContent.replace(/<think>[\s\S]*?<\/think>/, '').trim()
+        messages.value.push({
+          role: 'assistant',
+          content:responseContent ,
+          imageUrl: imageUrls[0], // 使用当前选择的图片
+          timestamp: Date.now(),
+        });
+        add(Param[0]);
+        setTimeout(() =>{
           messages.value.push({
             role: 'assistant',
-            imageUrl: selectedImageUrl, // 使用当前选择的图片
+            content:"检测到前方道路出现问题 重新规范路线" ,
+            imageUrl: imageUrls[1], // 使用当前选择的图片
             timestamp: Date.now(),
           });
-        }, 0);
-
+          add(Param[1]);
+        },5000)
+        nextTick(() =>{
+          AiControllerCar(1)
+        })
       } catch (err) {
         error.value = err instanceof Error ? err.message : '未知的错误';
       } finally {

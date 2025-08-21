@@ -91,12 +91,15 @@ onMounted(() => {
               <div class="content-bubble">
 
                 <Text class="content-text">{{ message.content }}</Text>
-                <a-image
-                  v-if="message.imageUrl"
-                  :src="message.imageUrl"
-                  alt="AI 生成的图片"
-                  style="max-width: 300px; margin-top: 10px;"
-                />
+                <div>
+                  <a-image
+                    v-if="message.imageUrl"
+                    :src="message.imageUrl"
+                    alt="AI 生成的图片"
+                    style="max-width: 300px; margin-top: 10px;"
+                  />
+                </div>
+
               </div>
               <div class="message-time">
                 {{ new Date(message.timestamp).toLocaleTimeString() }}

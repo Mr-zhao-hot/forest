@@ -1,5 +1,9 @@
+import time
+
 import serial
 import serial.tools.list_ports
+from cv2.gapi.ie import Async
+import fire as f
 
 FRAME_LEN = 17  # 假设数据帧长度
 FRAME_HEAD = 0x55  # 假设帧头字节
@@ -12,6 +16,7 @@ class SerialMonitor:
         self.uart_port = "COM7"
         if not self.uart_port:
             raise RuntimeError("未找到可用串口设备")
+
 
         try:
             self.ser = serial.Serial(
@@ -37,11 +42,22 @@ class SerialMonitor:
         """读取并验证数据帧"""
         while True:
             data = self.ser.read(FRAME_LEN)
-            if len(data) == FRAME_LEN and data[0] == FRAME_HEAD:
+            if data:
+                print(f"接收到数据: {data}")
                 return data
-            elif data:
-                print(f"丢弃无效数据: {data}")
-                return data
+
+
+    def ControllerCar(self):
+        while 3:
+            if f.fontMessage != "":
+                pass
+            else:
+                print(f.fontMessage)
+                for i in range(3):
+                    time.sleep(0.3)
+                    self.ser.write(b"A")
+                    print("已经发送数据")
+                break
 
     def run(self):
         """持续打印串口数据"""
@@ -49,8 +65,11 @@ class SerialMonitor:
         try:
             while True:
                 data = self.read_data()
-                # 打印原始字节和十六进制
+                self.ControllerCar()
                 print(f"接收: {data} | HEX: {data.hex(' ')}")
+
+                # 打印原始字节和十六进制
+
                 # 可选：解析为具体数值（示例）
                 # if len(data) >= 17:
                 #     print(f"解析: CO2={(data[2] << 8) | data[3]}, Temp={data[12]}°C, Hum={data[13]}%")
