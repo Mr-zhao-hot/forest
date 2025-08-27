@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { useChatStore } from '@/stores/AiStore.ts'
-import { ref, onMounted, nextTick } from 'vue'
-import { Input, Avatar, Typography, message, Image } from 'ant-design-vue' // 添加Image导入
-import { h } from 'vue'
-import {
-  SearchOutlined,
-  UserOutlined,
-  TrademarkCircleTwoTone // 添加缺少的图标导入
-} from '@ant-design/icons-vue'
+import {useChatStore} from '@/stores/AiStore.ts'
+import {h, nextTick, onMounted, ref} from 'vue'
+import {Avatar, Image, Input, message, Typography} from 'ant-design-vue' // 添加Image导入
+import {SearchOutlined, TrademarkCircleTwoTone, UserOutlined} from '@ant-design/icons-vue'
 
 const { Text } = Typography
 const AImage = Image // 重命名避免冲突

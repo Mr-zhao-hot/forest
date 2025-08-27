@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import type { SelectProps } from 'ant-design-vue';
+import {defineStore} from 'pinia'
+import {ref} from 'vue'
+import type {SelectProps} from 'ant-design-vue';
 
 interface Message {
   role: 'user' | 'assistant'
