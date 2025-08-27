@@ -19,9 +19,6 @@ export const useChatStore = defineStore('chat', () => {
     { value: '小创助手', label: '小创助手' },
   ]);
 
-  // 在组件外部定义状态变量（避免被重复初始化）
-  // let currentImageIndex = 0;
-  // let currentParamIndex = 0;
   // const handleChange = async (content: string) => {
   //   console.log(`selected ${value}`);
   //   if (value.value === "模拟火灾") {
@@ -39,15 +36,16 @@ export const useChatStore = defineStore('chat', () => {
   //       // // 参数组
   //       const Param = [{ firePoint: 'A1', rescueVehicle: 'B2' ,inspectionVehicle:'C1',fireTruck:'D1',wrecker:'T1'},]
   //       // 定义两张图片的URL
-  //       const imageUrls = ['https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', // 第一张图片];
+  //       const imageUrls = ['http://localhost:8080/img/f8977627b31b8a1eae46402c2870bb20.png']
   //       // 调用图片接口
-  //       const response = await Ai({ content })
+  //       const response = await AiFire({ content })
   //       add(Param[0]);
-  //       let responseContent = response.data?.response || ''
-  //       responseContent = responseContent.replace(/<think>[\s\S]*?<\/think>/, '').trim()
+  //       // let responseContent = response.data?.response || ''
+  //       // responseContent = responseContent.replace(/<think>[\s\S]*?<\/think>/, '').trim()
+  //
   //     messages.value.push({
   //       role: 'assistant',
-  //       content:responseContent ,
+  //       content:"路线已经计算完毕",
   //       imageUrl: imageUrls[0], // 使用当前选择的图片
   //       timestamp: Date.now(),
   //     });
@@ -59,7 +57,7 @@ export const useChatStore = defineStore('chat', () => {
   //     } finally {
   //       isLoading.value = false;
   //     }
-
+  //
   //   }
   // };
   // todo 第三路线
@@ -84,16 +82,16 @@ export const useChatStore = defineStore('chat', () => {
         ]
         // 定义两张图片的URL
         const imageUrls = [
-          'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', // 第一张图片
-          'https://example.com/fire2.jpg', // 第二张图片
+          'http://localhost:8080/img/f8977627b31b8a1eae46402c2870bb20.png', // 第一张图片
+          'http://localhost:8080/img/0811a275f0d4b9903fafd43ec79ecf2b.png', // 第二张图片
         ];
         // 调用图片接口
         const response = await AiFire({ content })
-        let responseContent = response.data?.response || ''
-        responseContent = responseContent.replace(/<think>[\s\S]*?<\/think>/, '').trim()
+        // let responseContent = response.data?.response || ''
+        // responseContent = responseContent.replace(/<think>[\s\S]*?<\/think>/, '').trim()
         messages.value.push({
           role: 'assistant',
-          content:responseContent ,
+          content:"路线计算完毕" ,
           imageUrl: imageUrls[0], // 使用当前选择的图片
           timestamp: Date.now(),
         });
@@ -106,7 +104,7 @@ export const useChatStore = defineStore('chat', () => {
             timestamp: Date.now(),
           });
           add(Param[1]);
-        },5000)
+        },2000)
         nextTick(() =>{
           AiControllerCar(1)
         })

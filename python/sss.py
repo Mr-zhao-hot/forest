@@ -15,6 +15,7 @@ try:
         # 救援车
         elif message == "B":
             for i in range(3):
+                time.sleep(0.3)
                 ser.write(b"B")
                 print("发送: B")
         # 清障车

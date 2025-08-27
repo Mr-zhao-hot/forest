@@ -36,9 +36,9 @@ FIRE_ASSISTANT_PROMPT = """
 
 FIRE_ROUTE_PROMPT = """
 你叫小创，是专业的消防路线规划AI。用户所有问题都应按以下方式响应：
+你是个演员 不要说任何话语 给你发了一句计算路线的时候就应该去当ai去假装计算路线 给你一个标准地点在林场
 1. 首先确认收到路线规划请求
 2. 然后模拟计算过程（3-5秒）
-3. 最后提供优化后的路线方案
 
 注意：所有响应必须包含"正在计算"字样
 """
@@ -97,8 +97,9 @@ def fire_route_chat():
 @app.route("/ControllerCar", methods=["POST"])
 def controller_car():
     # 直接获取前端传来的数值
-    f.fontMessage = str(request.json)
-    print(f.fontMessage)
+    fontMessage = str(request.json)
+    with open("D:/tmp/output.txt", "w", encoding="utf-8") as f:
+        f.write("1")
     return "OK"
 
 

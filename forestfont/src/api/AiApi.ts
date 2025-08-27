@@ -1,4 +1,5 @@
 import CommonInstance from '@/utils/CommonInstance.ts'
+import { nextTick } from 'vue'
 
 export function Ai(content: any) {
   return CommonInstance({
@@ -24,3 +25,7 @@ export function AiControllerCar(content: any) {
     data: content,
   })
 }
+
+
+
+

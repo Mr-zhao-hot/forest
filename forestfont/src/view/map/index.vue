@@ -59,7 +59,7 @@ const initMap = async () => {
       rotation: -15,
       viewMode: '3D', // 开启3D视图
       zooms: [2, 20],
-      center: [116.333926, 39.997245],
+      center: [123.344031, 41.664757],
       mapStyle: 'amap://styles/satellite', // 设置为卫星地图
     })
 
@@ -148,7 +148,7 @@ onUnmounted(() => {
 
 <style>
 #map-container {
-  border: 1px red solid;
+
   height: 100vh !important;
   position: relative;
 }

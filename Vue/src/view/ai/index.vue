@@ -1,35 +1,33 @@
 <script setup lang="ts">
 import { useChatStore } from '@/stores/AiStore.ts'
 import { ref, onMounted, nextTick } from 'vue'
-import { Input, Avatar, Typography, message } from 'ant-design-vue'
+import { Input, Avatar, Typography, message, Image } from 'ant-design-vue' // 添加Image导入
 import { h } from 'vue'
-import { SearchOutlined } from '@ant-design/icons-vue'
+import {
+  SearchOutlined,
+  UserOutlined,
+  TrademarkCircleTwoTone // 添加缺少的图标导入
+} from '@ant-design/icons-vue'
+
 const { Text } = Typography
+const AImage = Image // 重命名避免冲突
 const chatStore = useChatStore()
 const messageInput = ref('')
 const messagesEndRef = ref<HTMLElement>()
-// 图片显示
-const ok = ref<boolean>(true)
+
+// 移除不需要的ok变量，简化逻辑
 const handleSubmit = async () => {
-  ok.value = false
   const trimmedMessage = messageInput.value.trim()
 
   if (!trimmedMessage) {
     message.warning('请输入消息内容')
-    if (chatStore.messages.length === 0) {
-      ok.value = true
-    }
     return
   }
 
   try {
-    // 先清空输入框
     messageInput.value = ''
     await nextTick()
-    // 发送消息
-    await chatStore.sendMessage(trimmedMessage)
-
-    // 滚动到底部
+    await chatStore.handleAiResponse(trimmedMessage) // 确保方法名一致
     scrollToBottom()
   } catch (error) {
     console.error('发送消息失败:', error)
@@ -43,28 +41,15 @@ const scrollToBottom = () => {
   })
 }
 
+
 onMounted(() => {
   scrollToBottom()
-})
 
-
+});
 </script>
 
 <template>
-  <!--  logo    -->
-<!--  <div class="pulsing-logo" v-if="ok">-->
-<!--    <a-image ref="image" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" alt="AI Logo"  />-->
-<!--  </div>-->
-<!--  <div class="pulsing-logo1" v-else>-->
-<!--    <a-image ref="image" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" alt="AI Logo"  />-->
-<!--  </div>-->
-
   <div class="chat-app">
-    <!-- 标题栏 -->
-    <div class="app-header">
-      <h2>智能小创 Ai助手</h2>
-    </div>
-
     <!-- 主聊天区域 -->
     <div class="chat-container">
       <!-- 消息区域 -->
@@ -89,8 +74,9 @@ onMounted(() => {
                 </template>
               </Avatar>
               <div class="content-bubble">
-
-                <Text class="content-text">{{ message.content }}</Text>
+                <!-- 修改这里：使用pre标签保持JSON格式 -->
+                <pre v-if="message.content && message.content.startsWith('{')" class="json-content">{{ message.content }}</pre>
+                <Text v-else class="content-text">{{ message.content }}</Text>
                 <div>
                   <a-image
                     v-if="message.imageUrl"
@@ -99,7 +85,6 @@ onMounted(() => {
                     style="max-width: 300px; margin-top: 10px;"
                   />
                 </div>
-
               </div>
               <div class="message-time">
                 {{ new Date(message.timestamp).toLocaleTimeString() }}
@@ -121,18 +106,6 @@ onMounted(() => {
 
       <!-- 输入区域 - 现在固定在底部 -->
       <div class="input-wrapper">
-        <a-select
-          v-model:value="chatStore.value"
-          show-search
-          placeholder="请选择模式"
-          style="width: 200px"
-          :options="chatStore.options"
-          :filter-option="chatStore.filterOption"
-          @focus="chatStore.handleFocus"
-          @blur="chatStore.handleBlur"
-          @change="chatStore.handleChange"
-          size="large"
-        ></a-select>
         <Input
           v-model:value="messageInput"
           placeholder="输入消息..."

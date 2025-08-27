@@ -103,8 +103,8 @@ public class SecurityConfig {
 
         // 允许的前端地址（替换为你的实际前端地址）
         config.setAllowedOrigins(List.of(
-                "http://192.168.251.53:5173", // 前端 IP 地址
-                "http://localhost:5173"       // 本地开发地址
+                "http://192.168.251.53:5174", // 前端 IP 地址
+                "http://localhost:5174"       // 本地开发地址
         ));
 
         // 允许的 HTTP 方法
