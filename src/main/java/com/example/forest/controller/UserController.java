@@ -26,7 +26,6 @@ public class UserController {
     // 用户登录操作
     @TimeLog
     @PostMapping("/systemlogin")
-//    @Cacheable(value = "Login", key = "'LoginSelect'")
     public JsonOk login(@RequestBody SystemUserLoginParam systemUserLoginParam, HttpServletRequest request) {
         return JsonOk.success("登录成功",systemUserServiceImpl.login(systemUserLoginParam.getPhone(), systemUserLoginParam.getPassword(),
                 request.getRemoteAddr(),

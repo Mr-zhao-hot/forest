@@ -300,7 +300,7 @@ onMounted(() => {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: white;
+  background: black;
   opacity: 0.7;
   animation: typingAnimation 1.4s infinite ease-in-out;
 }

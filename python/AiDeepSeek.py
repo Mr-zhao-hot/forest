@@ -1,3 +1,4 @@
+import json
 from urllib import request
 
 from flask import Flask, request, jsonify
@@ -45,7 +46,7 @@ FIRE_ROUTE_PROMPT = """
 
 
 def call_ollama(prompt, user_message):
-    """调用Ollama API的通用函数"""
+    """调用Ollama API的通用函数（流式处理）"""
     try:
         import requests
         response = requests.post(
@@ -56,26 +57,70 @@ def call_ollama(prompt, user_message):
                     {"role": "system", "content": prompt},
                     {"role": "user", "content": user_message}
                 ],
-                "stream": False
+                "stream": True
             },
-            timeout=30  # 添加超时设置
+            timeout=30,
+            stream=True  # 添加stream参数
         )
         response.raise_for_status()
-        return response.json().get("message", {}).get("content", "")
+
+        # 处理流式响应
+        full_response = ""
+        for line in response.iter_lines():
+            if line:
+                line_data = json.loads(line.decode('utf-8'))
+                if 'message' in line_data and 'content' in line_data['message']:
+                    full_response += line_data['message']['content']
+
+        return full_response
+
     except requests.exceptions.RequestException as e:
         raise Exception(f"Ollama API调用失败: {str(e)}")
+    except json.JSONDecodeError as e:
+        raise Exception(f"JSON解析失败: {str(e)}")
 
+
+from flask import Response, stream_with_context
+import json
 
 @app.route('/api/chat', methods=['POST'])
 def general_chat():
-    """通用消防助手对话接口"""
+    """通用消防助手对话接口（真正的流式响应）"""
     user_message = request.json.get("content", "")
     if not user_message:
         return jsonify({"error": "必须提供content参数"}), 400
 
     try:
-        ai_response = call_ollama(FIRE_ASSISTANT_PROMPT, user_message)
-        return jsonify({"response": ai_response})
+        def generate():
+            import requests
+            response = requests.post(
+                OLLAMA_URL,
+                json={
+                    "model": MODEL,
+                    "messages": [
+                        {"role": "system", "content": FIRE_ASSISTANT_PROMPT},
+                        {"role": "user", "content": user_message}
+                    ],
+                    "stream": True
+                },
+                timeout=30,
+                stream=True
+            )
+            response.raise_for_status()
+
+            for line in response.iter_lines():
+                if line:
+                    try:
+                        line_data = json.loads(line.decode('utf-8'))
+                        if 'message' in line_data and 'content' in line_data['message']:
+                            content = line_data['message']['content']
+                            # 以流式方式返回每个数据块
+                            yield f"data: {json.dumps({'chunk': content})}\n\n"
+                    except json.JSONDecodeError:
+                        continue
+
+        return Response(stream_with_context(generate()), mimetype='text/event-stream')
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

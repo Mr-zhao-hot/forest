@@ -705,27 +705,28 @@ onMounted(async () => {
     }
 
     .main-chart {
-      width: vw(500);
+      width: vw(650);
       height: 100%;
       background: rgba(255, 255, 255, 0.1);
       opacity: 0;
-      animation: fadeIn 1s ease forwards 0.3s;
+      animation: fadeIn 1s ease forwards 0.1s;
       position: relative; /* 添加这个以便作为定位上下文 */
 
       img {
-        z-index: 40;
+        z-index: -40;
         position: fixed;
         left: 50%; /* 将图片左边缘定位到视口中央 */
         top: 50%; /* 将图片上边缘定位到视口中央 */
-        transform: translate(-50%, -47%); /* 通过负向平移使图片真正居中 */
-        width: auto; /* 或设置具体宽度，避免图片变形 */
-        max-width: vw(10000); /* 确保图片不会超出视口 */
-        max-height: vh(2000); /* 确保图片不会超出视口高度 */
-        animation: float 6s ease-in-out infinite;
+        transform: translate(-10%, -17%); /* 通过负向平移使图片真正居中 */
+        width: vw(2900);
+        height: vw(2900);
+        max-width: vw(12000); /* 确保图片不会超出视口 */
+        max-height: vh(122000); /* 确保图片不会超出视口高度 */
+        animation: float 12s ease-in-out infinite;
 
         @keyframes float {
           0%, 100% {
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -45%);
           }
           50% {
             transform: translate(-50%, -44%);

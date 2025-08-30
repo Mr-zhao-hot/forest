@@ -1,13 +1,14 @@
 import CommonInstance from '@/utils/CommonInstance.ts'
-import { nextTick } from 'vue'
-
 export function Ai(content: any) {
   return CommonInstance({
     url: '/api/chat',
     method: 'POST',
     data: content,
-  })
+  });
 }
+
+
+
 
 export function AiFire(content: any) {
   return CommonInstance({
