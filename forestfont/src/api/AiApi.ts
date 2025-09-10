@@ -8,16 +8,6 @@ export function Ai(content: any) {
 }
 
 
-
-
-export function AiFire(content: any) {
-  return CommonInstance({
-    url:"/api/chatFire",
-    method:"POST",
-    data: content,
-  })
-}
-
 // 操作小车
 export function AiControllerCar(content: any) {
   return CommonInstance({

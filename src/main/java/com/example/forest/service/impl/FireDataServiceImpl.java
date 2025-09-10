@@ -161,7 +161,7 @@ public class FireDataServiceImpl extends ServiceImpl<FireDataMapper, FireData>
             file.transferTo(destFile);
 
             // 返回相对路径（根据实际需求调整）
-            String relativePath = "static/img/" + fileName;
+            String relativePath = "img/" + fileName;
             return relativePath;
         } catch (IOException e) {
             throw new BusinessException(ServiceCode.FAIL_CODE, "文件上传失败: " + e.getMessage());

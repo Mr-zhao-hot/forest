@@ -1,142 +1,67 @@
 import json
-from urllib import request
-
-from flask import Flask, request, jsonify
-import serial
-import serial.tools.list_ports
-from flask import Flask
+import requests
+from flask import Flask, request, Response
 from flask_cors import CORS
-import fire as f
+
 
 app = Flask(__name__)
 CORS(app)
 
-# 共享配置
-OLLAMA_URL = "http://localhost:11434/api/chat"
-MODEL = "deepseek-r1:8b"
-
-# 系统提示模板
-FIRE_ASSISTANT_PROMPT = """
-你叫小创，是一个专业的消防AI机器人助手。你拥有以下核心功能：
-1. 消防车路径规划与实时路线计算
-2. 受灾人员定位与救援路径优化
-3. 消防嵌入式系统开发支持
-4. 消防相关软件开发指导
-
-交互要求：
-- 使用简洁易懂的口语化表达
-- 回答时先确认问题类型（如定位/路径/开发）
-- 对复杂操作分步骤说明
-- 涉及安全问题时必须强调警示
-- 保持积极热情的语调
-
-示例回答风格：
-"关于消防车路线规划的问题，小创建议..."
-"这个问题涉及人员定位，需要注意..."
-"""
-
-FIRE_ROUTE_PROMPT = """
-你叫小创，是专业的消防路线规划AI。用户所有问题都应按以下方式响应：
-你是个演员 不要说任何话语 给你发了一句计算路线的时候就应该去当ai去假装计算路线 给你一个标准地点在林场
-1. 首先确认收到路线规划请求
-2. 然后模拟计算过程（3-5秒）
-
-注意：所有响应必须包含"正在计算"字样
-"""
 
 
-def call_ollama(prompt, user_message):
-    """调用Ollama API的通用函数（流式处理）"""
-    try:
-        import requests
-        response = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": MODEL,
-                "messages": [
-                    {"role": "system", "content": prompt},
-                    {"role": "user", "content": user_message}
-                ],
-                "stream": True
-            },
-            timeout=30,
-            stream=True  # 添加stream参数
-        )
+@app.route('/api/chat', methods=['POST'])  # 添加路由装饰器
+def chat():
+    send = request.get_json()
+    content = send.get('content','')
+    tip = """
+                        你叫小创，是一个专业的物联网与林业知识 AI 助手。当我提及 “松树” 时，你需自动触发松树内部结构讲解模式，核心功能聚焦两点：
+
+                        松树内部结构拆解（含各部位位置、外观特点、核心功能）
+                        关联林业知识延伸（含结构与树木生长的关系、观察养护要点）
+
+                        交互要求：
+
+                        使用简洁易懂的口语化表达，避免专业术语堆砌，比如把 “木质部” 说成松树的 “输水主干管”，复杂概念搭配生活化类比
+                        回答时先明确问题类型（如松树内部结构解析 / 松树养护关联知识），再展开内容
+                        按 “树干中心→木质部→形成层→韧皮部→树皮内层” 的顺序分步骤讲解，每个步骤搭配 1 个直观特点描述，比如 “形成层是夹在木质部和韧皮部之间的‘薄外套’，只有几层细胞厚，但能让树干慢慢长粗”
+                        涉及野外观察松树、林业作业等场景时，必须强调安全警示，比如 “野外观察松树内部结构时，不要用工具凿挖树干，避免伤害树木；同时要穿长袖衣物，防止松针划伤皮肤”
+                        保持积极热情的语调，讲解结尾补充 1 个实用小知识，比如 “松树树干里的树脂道很特别，一旦树干受伤，树脂会快速流出堵住伤口，就像给松树‘止血’一样”
+
+                        示例回答风格：
+                        “这个问题属于松树内部结构解析，小创先从树干中心开始讲...”
+                        “关于松树养护的关联知识，要先搞懂它的形成层功能，首先...”
+    """
+
+    prompt_tip = tip.format(content = content).strip()
+
+    def generate():
+        url = 'http://localhost:11434/api/generate'
+        payload = {
+            "model":"deepseek-r1:8b",
+            "prompt":prompt_tip,
+            "steam":True,
+            "think":False
+        }
+
+        response = requests.post(url, json=payload , stream=True)
         response.raise_for_status()
 
-        # 处理流式响应
-        full_response = ""
         for line in response.iter_lines():
             if line:
-                line_data = json.loads(line.decode('utf-8'))
-                if 'message' in line_data and 'content' in line_data['message']:
-                    full_response += line_data['message']['content']
-
-        return full_response
-
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Ollama API调用失败: {str(e)}")
-    except json.JSONDecodeError as e:
-        raise Exception(f"JSON解析失败: {str(e)}")
+                data = json.loads(line.decode('utf-8'))
+                if 'response' in data:
+                    yield f"data:{json.dumps({'content':data['response']})}\n\n"
+                if data.get('done', False):
+                    break
+    return Response(generate(), mimetype='text/event-stream')
 
 
-from flask import Response, stream_with_context
-import json
-
-@app.route('/api/chat', methods=['POST'])
-def general_chat():
-    """通用消防助手对话接口（真正的流式响应）"""
-    user_message = request.json.get("content", "")
-    if not user_message:
-        return jsonify({"error": "必须提供content参数"}), 400
-
-    try:
-        def generate():
-            import requests
-            response = requests.post(
-                OLLAMA_URL,
-                json={
-                    "model": MODEL,
-                    "messages": [
-                        {"role": "system", "content": FIRE_ASSISTANT_PROMPT},
-                        {"role": "user", "content": user_message}
-                    ],
-                    "stream": True
-                },
-                timeout=30,
-                stream=True
-            )
-            response.raise_for_status()
-
-            for line in response.iter_lines():
-                if line:
-                    try:
-                        line_data = json.loads(line.decode('utf-8'))
-                        if 'message' in line_data and 'content' in line_data['message']:
-                            content = line_data['message']['content']
-                            # 以流式方式返回每个数据块
-                            yield f"data: {json.dumps({'chunk': content})}\n\n"
-                    except json.JSONDecodeError:
-                        continue
-
-        return Response(stream_with_context(generate()), mimetype='text/event-stream')
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 
-@app.route('/api/chatFire', methods=['POST'])
-def fire_route_chat():
-    """专用消防路线规划接口"""
-    user_message = request.json.get("content", "")
-    if not user_message:
-        return jsonify({"error": "必须提供content参数"}), 400
 
-    try:
-        ai_response = call_ollama(FIRE_ROUTE_PROMPT, user_message)
-        return jsonify({"response": ai_response})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+
+
+
 
 
 @app.route("/ControllerCar", methods=["POST"])
@@ -147,6 +72,41 @@ def controller_car():
         f.write("1")
     return "OK"
 
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    #
+    # @app.route('/api/chat', methods=['POST'])  # 添加路由装饰器
+    # def chat():
+    #     data = request.get_json()
+    #     content = data.get('content', "")
+    #     tip = "12313"
+    #     prompt = tip.format(content=content).strip()
+    #
+    #     def generate():
+    #         url = "http://localhost:11434/api/generate"
+    #         payload = {
+    #             "model": "deepseek-r1:8b",
+    #             "prompt": prompt,
+    #             "stream": True,  # 修正拼写错误
+    #             "think": False
+    #         }
+    #
+    #         response = requests.post(url, json=payload, stream=True)
+    #         response.raise_for_status()
+    #
+    #         for line in response.iter_lines():
+    #             if line:
+    #                 # 修正JSON解析错误
+    #                 data = json.loads(line.decode('utf-8'))
+    #                 if 'response' in data:
+    #                     yield f"data: {json.dumps({'content': data['response']})}\n\n"
+    #                 if data.get('done', False):
+    #                     break
+    #
+    #     # 将Response返回移到generate()函数外部
+    #     return Response(generate(), mimetype='text/event-stream')
+
+
+
+

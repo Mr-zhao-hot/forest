@@ -5,19 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25383eb2-2412-41e1-9fab-3233ca970c18" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../python/prompt.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/data_source_mapping.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/AiStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/AiStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../forestfont/src/api/AiApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/api/AiApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../forestfont/src/stores/FireStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/stores/FireStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../forestfont/src/view/Screen/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/view/Screen/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../python/cq.py" beforeDir="false" afterPath="$PROJECT_DIR$/../python/cq.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/static/img/b577f4b971f06023ac1accc263e8f52-removebg-preview_1755454240916.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../forestfont/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../forestfont/src/stores/AiStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/stores/AiStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../forestfont/src/utils/CommonInstance.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/utils/CommonInstance.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../forestfont/src/utils/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/utils/http.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../forestfont/src/view/PageMain/PageMain.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/view/PageMain/PageMain.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../forestfont/src/view/ai/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/view/ai/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../forestfont/src/view/map/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../forestfont/src/view/map/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/AiDeepSeek.py" beforeDir="false" afterPath="$PROJECT_DIR$/../python/AiDeepSeek.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/ControllerCar.py" beforeDir="false" afterPath="$PROJECT_DIR$/../python/ControllerCar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/DarkWriteCode.py" beforeDir="false" afterPath="$PROJECT_DIR$/../python/DarkWriteCode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/Ollama.py" beforeDir="false" afterPath="$PROJECT_DIR$/../python/Ollama.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/SeedMessageControllerCar.py" beforeDir="false" afterPath="$PROJECT_DIR$/../python/SeedMessageControllerCar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../python/uart_print.py" beforeDir="false" afterPath="$PROJECT_DIR$/../python/uart_print.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/forest/utils/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/com/example/forest/utils/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../target/classes/com/example/forest/utils/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/../target/classes/com/example/forest/utils/SecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../人工智能软件开发技术员.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../人工智能软件开发技术员.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,21 +57,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Mr_zh\\Desktop\\项目\\forest\\Vue\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -80,6 +89,19 @@
       <updated>1756447632878</updated>
       <workItem from="1756447634015" duration="1019000" />
       <workItem from="1756513089471" duration="3574000" />
+      <workItem from="1756703535397" duration="8511000" />
+      <workItem from="1756777487340" duration="3463000" />
+      <workItem from="1756797684758" duration="6083000" />
+      <workItem from="1756867194640" duration="2225000" />
+      <workItem from="1756978159160" duration="706000" />
+      <workItem from="1757055936498" duration="907000" />
+      <workItem from="1757061970653" duration="1263000" />
+      <workItem from="1757124578146" duration="945000" />
+      <workItem from="1757178239125" duration="683000" />
+      <workItem from="1757211801422" duration="6309000" />
+      <workItem from="1757252101140" duration="1142000" />
+      <workItem from="1757279990057" duration="418000" />
+      <workItem from="1757289307713" duration="1774000" />
     </task>
     <servers />
   </component>

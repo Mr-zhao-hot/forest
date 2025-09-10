@@ -19,8 +19,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
       resolve-lazily: false
-      location: C:\Users\Mr_zh\Desktop\项目\林场\forest\src\main\resources\static\img
-
+      location: C:\Users\Mr_zh\Desktop\项目\forest\src\main\resources\static\img
 
 
 # JWT??

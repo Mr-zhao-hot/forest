@@ -88,18 +88,23 @@ onMounted(() => {
                   <span v-else><TrademarkCircleTwoTone /></span>
                 </template>
               </Avatar>
+              <!-- 前端渲染模板修改 -->
               <div class="content-bubble">
+                <!-- 只有当content存在且不为空时才显示文本区域 -->
+                <Text
+                  class="content-text"
+                  v-if="message.content && message.content.trim() !== ''"
+                >
+                  {{ message.content }}
+                </Text>
 
-                <Text class="content-text">{{ message.content }}</Text>
-                <div>
+                <div v-if="message.imageUrl">
                   <a-image
-                    v-if="message.imageUrl"
                     :src="message.imageUrl"
                     alt="AI 生成的图片"
                     style="max-width: 300px; margin-top: 10px;"
                   />
                 </div>
-
               </div>
               <div class="message-time">
                 {{ new Date(message.timestamp).toLocaleTimeString() }}
@@ -128,8 +133,7 @@ onMounted(() => {
           style="width: 200px"
           :options="chatStore.options"
           :filter-option="chatStore.filterOption"
-          @focus="chatStore.handleFocus"
-          @blur="chatStore.handleBlur"
+
           @change="chatStore.handleChange"
           size="large"
         ></a-select>

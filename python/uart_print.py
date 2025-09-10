@@ -52,7 +52,7 @@ class SerialMonitor:
                 # 打印原始字节和十六进制
                 print(f"接收: {data} | HEX: {data.hex(' ')}")
                 # 可选：解析为具体数值（示例）
-                # if len(data) >= 17:
+                # if len(data) >= 17:   
                 #     print(f"解析: CO2={(data[2] << 8) | data[3]}, Temp={data[12]}°C, Hum={data[13]}%")
         except KeyboardInterrupt:
             print("\n用户中断")

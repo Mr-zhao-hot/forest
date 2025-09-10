@@ -18,9 +18,11 @@
           <a-menu-item key="6">实时定位</a-menu-item>
         </router-link>
 
-        <router-link to="/area" style="color: rgba(255, 255, 255, 0.65)"
-        ><a-menu-item key="8">定位记录</a-menu-item></router-link
-        >
+<!--        <router-link to="/area" style="color: rgba(255, 255, 255, 0.65)"-->
+<!--        ><a-menu-item key="8">定位记录</a-menu-item></router-link-->
+<!--        >-->
+
+
         <router-link to="/equipment" style="color: rgba(255, 255, 255, 0.65)"
           ><a-menu-item key="9">设备列表</a-menu-item></router-link
         >
@@ -34,11 +36,11 @@
           </a-menu-item>
         </router-link>
 
-        <router-link to="/key" style="color: rgba(255, 255, 255, 0.65)">
-          <a-menu-item key="12">
-            <span>秘钥管理</span>
-          </a-menu-item>
-        </router-link>
+<!--        <router-link to="/key" style="color: rgba(255, 255, 255, 0.65)">-->
+<!--          <a-menu-item key="12">-->
+<!--            <span>秘钥管理</span>-->
+<!--          </a-menu-item>-->
+<!--        </router-link>-->
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">

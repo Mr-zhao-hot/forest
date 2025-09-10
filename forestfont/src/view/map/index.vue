@@ -11,6 +11,7 @@ const keys = KeyStore()
 import AMapLoader from '@amap/amap-jsapi-loader'
 import { onMounted, onUnmounted, shallowRef, ref } from 'vue'
 
+
 // 使用shallowRef替代ref，因为地图对象不需要深度响应式
 const map = shallowRef<AMap.Map | null>(null)
 const AMapInstance = shallowRef<any>(null)
@@ -59,7 +60,7 @@ const initMap = async () => {
       rotation: -15,
       viewMode: '3D', // 开启3D视图
       zooms: [2, 20],
-      center: [123.344031, 41.664757],
+      center: [116.29485, 39.989446],
       mapStyle: 'amap://styles/satellite', // 设置为卫星地图
     })
 

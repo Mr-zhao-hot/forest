@@ -114,7 +114,7 @@ function validateToken(token: any) {
     return false
   }
 }
-
+//
 router.beforeEach(async (to, from, next) => {
   // 1. 定义公开路径
   const publicPaths = ['/', '/login']

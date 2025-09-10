@@ -5,7 +5,8 @@ import { message } from 'ant-design-vue'
 
 // 创建axios实例
 const httpInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+   // 'http://192.168.1.101:8080',
+  baseURL: "http://192.168.1.101:8080" ,
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
